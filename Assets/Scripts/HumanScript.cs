@@ -10,6 +10,7 @@ public class HumanScript : MonoBehaviour
 
     [SerializeField] float moveSpeed;
     Rigidbody2D mRigidbody;
+    public string debugText;
     
 
     // Start is called before the first frame update
@@ -17,13 +18,17 @@ public class HumanScript : MonoBehaviour
     {
         doorScript=FindAnyObjectByType<DoorScript>();
         mRigidbody=GetComponent<Rigidbody2D>();
+        mRigidbody.velocity = new Vector2(0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        debugText = "";
         Move();
         Dead();
+        debugText += mRigidbody.velocity;
+        
     }
     //à⁄ìÆèàóù
     void Move()
@@ -34,10 +39,7 @@ public class HumanScript : MonoBehaviour
             return;
         }
         mRigidbody.velocity=new Vector2(0,moveSpeed);
-        //Vector2 newPos = transform.position;
-        //newPos.y += moveSpeed*Time.deltaTime;
-
-        //transform.position = newPos;
+        
     }
     //éÄñSèàóù
     void Dead()
@@ -50,7 +52,8 @@ public class HumanScript : MonoBehaviour
                 Debug.Log("Dead");
             }
             isDead = true;
-            
+            mRigidbody.velocity = new Vector2(0, 0);
         }
     }
+     
 }

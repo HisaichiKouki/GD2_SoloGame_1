@@ -46,13 +46,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f062416781a9a4fb2420716180386e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  speedUpRaito: 2
   doorObj:
   - {fileID: 2202369309626022291}
   - {fileID: 1276034646768868674}
+  openPos: 2
+  totalTime: 1
+  timeShortening: 0.1
+  minTime: 0.1
+  closeTimeEaseT: 0.1
+  curTotalTime: 0
+  easeCurTotalTime: 0
   currentMove: 0
-  currentSpeedUpRaito: 0
+  debugRatio: 0
 --- !u!1001 &8279284230076799203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -105,7 +110,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorCollision (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5531128653237066533, guid: 3b4985528a80af645a0a38aebc17d060, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -178,7 +184,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorCollision
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5531128653237066533, guid: 3b4985528a80af645a0a38aebc17d060, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
