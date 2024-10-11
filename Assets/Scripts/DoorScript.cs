@@ -1,21 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DoorScript : MonoBehaviour
 {
-    [SerializeField] float moveSpeed;
-    [SerializeField] float speedUpRaito;
-    [SerializeField] GameObject[] doorObj;
-
+   
+    [SerializeField] DoorMove[] doorObj;
+    [SerializeField] float openPos;//”à‚ð‚Ç‚Ì‚­‚ç‚¢ŠJ‚­‚Ì‚©
+    [SerializeField] float totalTime;//ŠJ‚­ŽžŠÔ
+    [SerializeField] float timeShortening;//ŽžŠÔ‚ª’Z‚­‚È‚éŠ„‡
+    [SerializeField] float minTime;//ŽžŠÔ‚ª’Z‚­‚È‚éŠ„‡
+    [SerializeField] float closeTimeEaseT;//ŽžŠÔ‚ª’Z‚­‚È‚éŠ„‡
+    
     Vector2[] doorInitPos = new Vector2[2];
-    public float currentMove;
-    public float currentSpeedUpRaito;
+
 
     bool isClose;
 
-    
-
+    [Header("debug")]
+   
+    public float curTotalTime;
+    public float easeCurTotalTime;
+    public float currentMove;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,32 +30,51 @@ public class DoorScript : MonoBehaviour
         {
             doorInitPos[i] = doorObj[i].transform.position;
         }
-        currentSpeedUpRaito = 1;
+       
+        curTotalTime = totalTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //”à‚ð•Â‚ß‚éŽž‚É
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isClose = true;
-            currentSpeedUpRaito += speedUpRaito;
+           
+            curTotalTime -= timeShortening;
+            curTotalTime = Mathf.Clamp(curTotalTime, minTime, totalTime);
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
             isClose = false;
         }
+        //Lerp‚ÌT‚ð•Ï“®‚·‚é
         if (isClose)
         {
-            currentMove -= moveSpeed * currentSpeedUpRaito * Time.deltaTime;
+            currentMove += Time.deltaTime;
         }
         else
         {
-            currentMove += moveSpeed * currentSpeedUpRaito * Time.deltaTime;         
+            currentMove -= Time.deltaTime;
         }
-        currentMove = Mathf.Clamp(currentMove, 0, 2);
-        doorObj[0].transform.position = new Vector2(doorInitPos[0].x - currentMove, doorInitPos[0].y);
-        doorObj[1].transform.position = new Vector2(doorInitPos[1].x + currentMove, doorInitPos[1].y);
+
+        easeCurTotalTime = Mathf.Lerp(easeCurTotalTime, curTotalTime, closeTimeEaseT);
+        currentMove = Mathf.Clamp(currentMove, 0, curTotalTime);
+        //0œŽZ‘Îô
+        if (currentMove > 0)
+        {
+            doorObj[0].transform.position = Vector2.Lerp(doorInitPos[0], new Vector2(doorInitPos[0].x - openPos, doorInitPos[0].y), currentMove / easeCurTotalTime);
+            doorObj[1].transform.position = Vector2.Lerp(doorInitPos[1], new Vector2(doorInitPos[1].x + openPos, doorInitPos[1].y), currentMove / easeCurTotalTime);
+        }
+        else
+        {
+            doorObj[0].transform.position = doorInitPos[0];
+            doorObj[1].transform.position = doorInitPos[1];
+        }
     }
+
+
 }
+
+
