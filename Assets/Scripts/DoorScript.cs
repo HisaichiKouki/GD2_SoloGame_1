@@ -5,24 +5,25 @@ using UnityEngine.UIElements;
 
 public class DoorScript : MonoBehaviour
 {
-   
+
     [SerializeField] DoorMove[] doorObj;
     [SerializeField] float openPos;//”à‚ð‚Ç‚Ì‚­‚ç‚¢ŠJ‚­‚Ì‚©
     [SerializeField] float totalTime;//ŠJ‚­ŽžŠÔ
     [SerializeField] float timeShortening;//ŽžŠÔ‚ª’Z‚­‚È‚éŠ„‡
     [SerializeField] float minTime;//ŽžŠÔ‚ª’Z‚­‚È‚éŠ„‡
     [SerializeField] float closeTimeEaseT;//ŽžŠÔ‚ª’Z‚­‚È‚éŠ„‡
-    
+
     Vector2[] doorInitPos = new Vector2[2];
 
 
     bool isClose;
 
     [Header("debug")]
-   
+
     public float curTotalTime;
     public float easeCurTotalTime;
     public float currentMove;
+    public float debugRatio;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,18 +31,19 @@ public class DoorScript : MonoBehaviour
         {
             doorInitPos[i] = doorObj[i].transform.position;
         }
-       
+
         curTotalTime = totalTime;
     }
 
     // Update is called once per frame
     void Update()
     {
+        debugRatio = GetOpenRatio();
         //”à‚ð•Â‚ß‚éŽž‚É
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isClose = true;
-           
+
             curTotalTime -= timeShortening;
             curTotalTime = Mathf.Clamp(curTotalTime, minTime, totalTime);
         }
@@ -60,7 +62,7 @@ public class DoorScript : MonoBehaviour
         }
 
         easeCurTotalTime = Mathf.Lerp(easeCurTotalTime, curTotalTime, closeTimeEaseT);
-        currentMove = Mathf.Clamp(currentMove, 0, curTotalTime);
+        currentMove = Mathf.Clamp(currentMove, 0, easeCurTotalTime);
         //0œŽZ‘Îô
         if (currentMove > 0)
         {
@@ -74,6 +76,18 @@ public class DoorScript : MonoBehaviour
         }
     }
 
+    public float GetOpenRatio()
+    {
+        if (currentMove == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return (currentMove / easeCurTotalTime);
+
+        }
+    }
 
 }
 
