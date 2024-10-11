@@ -5,16 +5,18 @@ using UnityEngine;
 public class HumanScript : MonoBehaviour
 {
     [SerializeField] HumanColliderScript[] sideColliders;
-    bool idDead;
+    bool isDead;
     DoorScript doorScript;
 
     [SerializeField] float moveSpeed;
+    Rigidbody2D mRigidbody;
     
 
     // Start is called before the first frame update
     void Start()
     {
         doorScript=FindAnyObjectByType<DoorScript>();
+        mRigidbody=GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -23,24 +25,32 @@ public class HumanScript : MonoBehaviour
         Move();
         Dead();
     }
+    //移動処理
     void Move()
     {
-        if (idDead) { return; }
+        if (isDead) { return; }
         if (doorScript.GetOpenRatio()<0.5f)
         {
             return;
         }
-        Vector2 newPos = transform.position;
-        newPos.y += moveSpeed*Time.deltaTime;
+        mRigidbody.velocity=new Vector2(0,moveSpeed);
+        //Vector2 newPos = transform.position;
+        //newPos.y += moveSpeed*Time.deltaTime;
 
-        transform.position = newPos;
+        //transform.position = newPos;
     }
+    //死亡処理
     void Dead()
     {
+        //サイドのコライダーがどっちもドアに触れてたら
         if (sideColliders[0].GetIsHit() && sideColliders[1].GetIsHit())
         {
-            idDead = true;
-            Debug.Log("Dead");
+            if (!isDead)
+            {
+                Debug.Log("Dead");
+            }
+            isDead = true;
+            
         }
     }
 }

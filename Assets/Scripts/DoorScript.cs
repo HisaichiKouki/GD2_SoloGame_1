@@ -75,7 +75,7 @@ public class DoorScript : MonoBehaviour
             doorObj[1].transform.position = doorInitPos[1];
         }
     }
-
+    //ŠJ‚¢‚Ä‚éŠ„‡‚ğ•Ï‚¦‚·
     public float GetOpenRatio()
     {
         if (currentMove == 0)
