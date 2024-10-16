@@ -12,6 +12,7 @@ public class DoorScript : MonoBehaviour
     [SerializeField] float timeShortening;//ŠÔ‚ª’Z‚­‚È‚éŠ„‡
     [SerializeField] float minTime;//ŠÔ‚ª’Z‚­‚È‚éŠ„‡
     [SerializeField] float closeTimeEaseT;//ŠÔ‚ª’Z‚­‚È‚éŠ„‡
+    [SerializeField] float getOnLength;//æÔ”»’è‚É‚È‚é‚Ü‚Å‚Ì‹——£
 
     Vector2[] doorInitPos = new Vector2[2];
 
@@ -24,6 +25,7 @@ public class DoorScript : MonoBehaviour
     public float easeCurTotalTime;
     public float currentMove;
     public float debugRatio;
+    public float GetGetonLength() { return getOnLength; }
     // Start is called before the first frame update
     void Start()
     {

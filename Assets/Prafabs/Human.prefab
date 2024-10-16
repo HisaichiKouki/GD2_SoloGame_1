@@ -158,7 +158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6133107431853674971
 Transform:
   m_ObjectHideFlags: 0
@@ -312,6 +312,9 @@ MonoBehaviour:
   - {fileID: 6016940894599679999}
   - {fileID: 3943231839168352234}
   moveSpeed: 1
+  randomSpeedFlag: 0
+  min: 0
+  max: 0
   debugText: 
 --- !u!61 &6224405596685108636
 BoxCollider2D:
