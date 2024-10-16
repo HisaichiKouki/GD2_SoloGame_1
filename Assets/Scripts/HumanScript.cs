@@ -14,9 +14,10 @@ public class HumanScript : MonoBehaviour
     [SerializeField] float max;
     Rigidbody2D mRigidbody;
     public string debugText;
-
+    Vector2 dif;
     bool getOnFlag;//èÊé‘ÇµÇΩÇ©ÉtÉâÉO
     TrainManager trainManager;
+    Vector2 moveVec;
 
     // Start is called before the first frame update
     void Start()
@@ -30,16 +31,20 @@ public class HumanScript : MonoBehaviour
         {
             moveSpeed = Random.Range(min, max);
         }
+
+        moveVec=doorScript.transform.position- transform.position;
+        moveVec=moveVec.normalized*moveSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        debugText = "";
+        //debugText = "";
         Move();
+        GotoTrain();
         Dead();
-        debugText += mRigidbody.velocity;
-
+        //debugText += mRigidbody.velocity;
+        debugText = "\nlength=" + dif.magnitude;
     }
     //à⁄ìÆèàóù
     void Move()
@@ -52,7 +57,7 @@ public class HumanScript : MonoBehaviour
 
             return;
         }
-        mRigidbody.velocity = new Vector2(0, moveSpeed);
+        mRigidbody.velocity = moveVec;
 
     }
     //éÄñSèàóù
@@ -75,7 +80,9 @@ public class HumanScript : MonoBehaviour
     void GotoTrain()
     {
         if (isDead) { return; }
-        Vector2 dif = this.transform.position - doorScript.transform.position;
+        
+        dif = this.transform.position - doorScript.transform.position;
+        
         if (dif.magnitude <= doorScript.GetGetonLength())
         {
             if (!getOnFlag)
