@@ -316,6 +316,7 @@ MonoBehaviour:
   min: 1.2
   max: 2
   moveRatio: 100
+  doorLength: 2
   debugText: 
 --- !u!61 &6224405596685108636
 BoxCollider2D:

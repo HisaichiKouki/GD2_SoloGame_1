@@ -13,6 +13,7 @@ public class HumanScript : MonoBehaviour
     [SerializeField] float min;
     [SerializeField] float max;
     [SerializeField] float moveRatio;//ドアから遠い程少しの開閉で止まるように
+    [SerializeField] float doorLength;//ドアに入ったくらいの距離では止まらないように
     Rigidbody2D mRigidbody;
     
     Vector2 dif;
@@ -57,6 +58,11 @@ public class HumanScript : MonoBehaviour
     {
         if (isDead) { return; }
         if (getOnFlag) { return; }
+        if (dif.magnitude < doorLength)
+        {
+            mRigidbody.velocity = moveVec;
+            return;
+        }
         if (doorScript.GetOpenRatio() < humanMoveRatio)
         {
             mRigidbody.velocity = new Vector2(0, 0);
@@ -76,6 +82,7 @@ public class HumanScript : MonoBehaviour
             if (!isDead)
             {
                 Debug.Log("Dead");
+                trainManager.DeadCount();
             }
             isDead = true;
             mRigidbody.velocity = new Vector2(0, 0);
