@@ -16,9 +16,13 @@ public class DoorScript : MonoBehaviour
 
     Vector2[] doorInitPos = new Vector2[2];
 
-
+    HumanSpawnManager humanSpawnManager;
+    TrainManager trainManager;
+    EndTime endTime;
+    GameOver gameOver;
     bool isClose;
-
+    float closeTime;
+    float closeTotalTime = 2;
     [Header("debug")]
 
     public float curTotalTime;
@@ -35,12 +39,27 @@ public class DoorScript : MonoBehaviour
         }
 
         curTotalTime = totalTime;
+        humanSpawnManager = FindAnyObjectByType<HumanSpawnManager>();
+        trainManager = FindAnyObjectByType<TrainManager>();
+        endTime = FindAnyObjectByType<EndTime>();
+        gameOver=FindAnyObjectByType<GameOver>();
     }
 
     // Update is called once per frame
     void Update()
     {
         debugRatio = GetOpenRatio();
+
+        StationEnd();
+        InputDoor();
+        easeCurTotalTime = Mathf.Lerp(easeCurTotalTime, curTotalTime, closeTimeEaseT);
+        DoorMove();
+    }
+
+    void InputDoor()
+    {
+        if (endTime.GetRemaingTime() <= 0) { return; }
+        if (trainManager.GetTotalCount() <= 0) { return; }
         //扉を閉める時に
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -62,8 +81,9 @@ public class DoorScript : MonoBehaviour
         {
             currentMove -= Time.deltaTime;
         }
-
-        easeCurTotalTime = Mathf.Lerp(easeCurTotalTime, curTotalTime, closeTimeEaseT);
+    }
+    void DoorMove()
+    {
         currentMove = Mathf.Clamp(currentMove, 0, easeCurTotalTime);
         //0除算対策
         if (currentMove > 0)
@@ -76,6 +96,34 @@ public class DoorScript : MonoBehaviour
             doorObj[0].transform.position = doorInitPos[0];
             doorObj[1].transform.position = doorInitPos[1];
         }
+    }
+
+    void StationEnd()
+    {
+        // if (endTime.GetRemaingTime() > 0) { return; }
+        //if (trainManager.GetTotalCount() > 0) { return; }
+
+        if (endTime.GetRemaingTime() <= 0 || trainManager.GetTotalCount() <= 0)
+        {
+            closeTime += Time.deltaTime;
+            currentMove = Mathf.Clamp(currentMove - Time.deltaTime * 2, 0, 1);
+            if (closeTime >= closeTotalTime)
+            {
+                Debug.Log("count=" + trainManager.GetTotalCount());
+                gameOver.EndCountUp(trainManager.GetTotalCount()*3);
+                if (trainManager.GetTotalCount()<=0)
+                {
+                    gameOver.EndCountUp(-30);//全員乗らせた時のボーナス
+                }
+                humanSpawnManager.NextStation();
+                endTime.ResetTime();
+                closeTime = 0;
+                isClose = false;
+                
+            }
+        }
+
+
     }
     //開いてる割合を変えす
     public float GetOpenRatio()

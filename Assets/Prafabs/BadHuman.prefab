@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.9800041, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -158,7 +158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6133107431853674971
 Transform:
   m_ObjectHideFlags: 0
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 3462453014644021955}
   - component: {fileID: 8770172339333090335}
   m_Layer: 0
-  m_Name: Human
+  m_Name: BadHuman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -374,9 +374,9 @@ Transform:
   m_GameObject: {fileID: 6521512966341322227}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.458, z: 0.060089614}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: -2.91, z: 0.060089614}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6133107431853674971}
   - {fileID: 347528457726770217}
@@ -397,15 +397,12 @@ MonoBehaviour:
   sideColliders:
   - {fileID: 6016940894599679999}
   - {fileID: 3943231839168352234}
-  moveSpeed: 5
+  moveSpeed: 15
   randomSpeedFlag: 0
   min: 2
   max: 10
-  moveRatio: 100
+  moveRatio: 50
   doorLength: 2
-  badRatio: 50
-  bodyColor: {fileID: 7093687961912709479}
-  humanMoveRatio: 0.9
   debugText: 
 --- !u!50 &3383708021477414674
 Rigidbody2D:
@@ -558,7 +555,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.9800041, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

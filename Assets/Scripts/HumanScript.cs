@@ -14,13 +14,15 @@ public class HumanScript : MonoBehaviour
     [SerializeField] float max;
     [SerializeField] float moveRatio;//ドアから遠い程少しの開閉で止まるように
     [SerializeField] float doorLength;//ドアに入ったくらいの距離では止まらないように
+    [SerializeField] float badRatio;//悪者になる割合
     Rigidbody2D mRigidbody;
-    
+    public SpriteRenderer bodyColor;
     Vector2 dif;
     bool getOnFlag;//乗車したかフラグ
     TrainManager trainManager;
     Vector2 moveVec;
-    float humanMoveRatio;
+    public float humanMoveRatio;
+    bool thisBadMan;
 
     public string debugText;
     // Start is called before the first frame update
@@ -35,23 +37,35 @@ public class HumanScript : MonoBehaviour
         {
             moveSpeed = Random.Range(min, max);
         }
-        //移動生成時にドアに向かう速度を計算
-        moveVec=doorScript.transform.position- transform.position;
-        moveVec=moveVec.normalized*moveSpeed;
+        float randomNum = Random.Range(0, 100);
+        if (randomNum <= badRatio)
+        {
+            thisBadMan = true;
+            bodyColor.color = Color.red;
+        }
+        if (thisBadMan)
+        {
+            humanMoveRatio /= 2;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        //移動生成時にドアに向かう速度を計算
+        moveVec = doorScript.transform.position - transform.position;
+        moveVec = moveVec.normalized * moveSpeed;
         //ドアまでの距離
         dif = this.transform.position - doorScript.transform.position;
-        humanMoveRatio= Mathf.Clamp((dif.magnitude * dif.magnitude) / moveRatio, 0.4f, 1.0f);
+        //humanMoveRatio = Mathf.Clamp((dif.magnitude * dif.magnitude) / moveRatio, 0.4f, 1.0f);
         //debugText = "";
         Move();
         GotoTrain();
+        BadManGotoTrain();
         Dead();
+        BadManDead();
         //debugText += mRigidbody.velocity;
-        debugText = "\nlength=" + dif.magnitude +"\nRaito="+ (dif.magnitude * dif.magnitude) / moveRatio +"\nhumanMoveRatio="+ humanMoveRatio;
+        debugText = "\nlength=" + dif.magnitude + "\nRaito=" + (dif.magnitude * dif.magnitude) / moveRatio + "\nhumanMoveRatio=" + humanMoveRatio;
     }
     //移動処理
     void Move()
@@ -63,6 +77,7 @@ public class HumanScript : MonoBehaviour
             mRigidbody.velocity = moveVec;
             return;
         }
+        
         if (doorScript.GetOpenRatio() < humanMoveRatio)
         {
             mRigidbody.velocity = new Vector2(0, 0);
@@ -76,6 +91,7 @@ public class HumanScript : MonoBehaviour
     void Dead()
     {
         if (getOnFlag) { return; }
+        if (thisBadMan) { return; }
         //サイドのコライダーがどっちもドアに触れてたら
         if (sideColliders[0].GetIsHit() && sideColliders[1].GetIsHit())
         {
@@ -83,18 +99,43 @@ public class HumanScript : MonoBehaviour
             {
                 Debug.Log("Dead");
                 trainManager.DeadCount();
+                if (thisBadMan)
+                {
+                    Debug.Log("NiceKill");
+                }
             }
             isDead = true;
             mRigidbody.velocity = new Vector2(0, 0);
+            Destroy(this.gameObject);
         }
     }
+    void BadManDead()
+    {
+        if (getOnFlag) { return; }
+        if (!thisBadMan) { return; }
+        //サイドのコライダーがどっちもドアに触れてたら
+        if (sideColliders[0].GetIsHit() && sideColliders[1].GetIsHit())
+        {
+            if (!isDead)
+            {
+                //Debug.Log("Dead");
+                // trainManager.DeadCount();
 
+                trainManager.BadDeadCount();
+                Debug.Log("NiceKill");
+            }
+            isDead = true;
+            mRigidbody.velocity = new Vector2(0, 0);
+            Destroy(this.gameObject);
+        }
+    }
     //乗車処理
     void GotoTrain()
     {
         if (isDead) { return; }
-        
-        
+        if (thisBadMan) { return; }
+
+
         //どの角度からでも対応出来るようにドアからの距離で入ったかを検知する
         if (dif.magnitude <= doorScript.GetGetonLength())
         {
@@ -108,5 +149,24 @@ public class HumanScript : MonoBehaviour
 
         }
 
+    }
+    void BadManGotoTrain()
+    {
+        if (isDead) { return; }
+        if (!thisBadMan) { return; }
+
+
+        //どの角度からでも対応出来るようにドアからの距離で入ったかを検知する
+        if (dif.magnitude <= doorScript.GetGetonLength())
+        {
+            if (!getOnFlag)
+            {
+                trainManager.BadTrainIn();
+            }
+            getOnFlag = true;
+            //テスト用に人を削除する
+            Destroy(this.gameObject);
+
+        }
     }
 }
