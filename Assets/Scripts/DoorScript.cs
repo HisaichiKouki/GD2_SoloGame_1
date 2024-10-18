@@ -109,11 +109,11 @@ public class DoorScript : MonoBehaviour
             currentMove = Mathf.Clamp(currentMove - Time.deltaTime * 2, 0, 1);
             if (closeTime >= closeTotalTime)
             {
-                Debug.Log("count=" + trainManager.GetTotalCount());
-                gameOver.EndCountUp(trainManager.GetTotalCount()*3);
+                //Debug.Log("count=" + trainManager.GetTotalCount());
+                gameOver.EndCountUp(-trainManager.GetTotalCount()*3);
                 if (trainManager.GetTotalCount()<=0)
                 {
-                    gameOver.EndCountUp(-30);//全員乗らせた時のボーナス
+                    gameOver.EndCountUp(30);//全員乗らせた時のボーナス
                 }
                 humanSpawnManager.NextStation();
                 endTime.ResetTime();

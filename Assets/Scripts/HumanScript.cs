@@ -38,6 +38,7 @@ public class HumanScript : MonoBehaviour
             moveSpeed = Random.Range(min, max);
         }
         float randomNum = Random.Range(0, 100);
+        //悪者なら色を変える
         if (randomNum <= badRatio)
         {
             thisBadMan = true;
@@ -61,9 +62,7 @@ public class HumanScript : MonoBehaviour
         //debugText = "";
         Move();
         GotoTrain();
-        BadManGotoTrain();
         Dead();
-        BadManDead();
         //debugText += mRigidbody.velocity;
         debugText = "\nlength=" + dif.magnitude + "\nRaito=" + (dif.magnitude * dif.magnitude) / moveRatio + "\nhumanMoveRatio=" + humanMoveRatio;
     }
@@ -77,7 +76,7 @@ public class HumanScript : MonoBehaviour
             mRigidbody.velocity = moveVec;
             return;
         }
-        
+
         if (doorScript.GetOpenRatio() < humanMoveRatio)
         {
             mRigidbody.velocity = new Vector2(0, 0);
@@ -91,49 +90,35 @@ public class HumanScript : MonoBehaviour
     void Dead()
     {
         if (getOnFlag) { return; }
-        if (thisBadMan) { return; }
+        //if (thisBadMan) { return; }
         //サイドのコライダーがどっちもドアに触れてたら
         if (sideColliders[0].GetIsHit() && sideColliders[1].GetIsHit())
         {
             if (!isDead)
             {
                 Debug.Log("Dead");
-                trainManager.DeadCount();
+                
                 if (thisBadMan)
                 {
-                    Debug.Log("NiceKill");
+                    trainManager.BadDeadCount();
                 }
-            }
-            isDead = true;
-            mRigidbody.velocity = new Vector2(0, 0);
-            Destroy(this.gameObject);
-        }
-    }
-    void BadManDead()
-    {
-        if (getOnFlag) { return; }
-        if (!thisBadMan) { return; }
-        //サイドのコライダーがどっちもドアに触れてたら
-        if (sideColliders[0].GetIsHit() && sideColliders[1].GetIsHit())
-        {
-            if (!isDead)
-            {
-                //Debug.Log("Dead");
-                // trainManager.DeadCount();
+                else
+                {
+                    trainManager.DeadCount();
+                }
 
-                trainManager.BadDeadCount();
-                Debug.Log("NiceKill");
             }
             isDead = true;
             mRigidbody.velocity = new Vector2(0, 0);
             Destroy(this.gameObject);
         }
     }
+   
     //乗車処理
     void GotoTrain()
     {
         if (isDead) { return; }
-        if (thisBadMan) { return; }
+        //if (thisBadMan) { return; }
 
 
         //どの角度からでも対応出来るようにドアからの距離で入ったかを検知する
@@ -141,7 +126,15 @@ public class HumanScript : MonoBehaviour
         {
             if (!getOnFlag)
             {
-                trainManager.TrainIn();
+                if (thisBadMan)
+                {
+                    trainManager.BadTrainIn();
+                }
+                else
+                {
+                    trainManager.TrainIn();
+                }
+                   
             }
             getOnFlag = true;
             //テスト用に人を削除する
@@ -150,23 +143,5 @@ public class HumanScript : MonoBehaviour
         }
 
     }
-    void BadManGotoTrain()
-    {
-        if (isDead) { return; }
-        if (!thisBadMan) { return; }
-
-
-        //どの角度からでも対応出来るようにドアからの距離で入ったかを検知する
-        if (dif.magnitude <= doorScript.GetGetonLength())
-        {
-            if (!getOnFlag)
-            {
-                trainManager.BadTrainIn();
-            }
-            getOnFlag = true;
-            //テスト用に人を削除する
-            Destroy(this.gameObject);
-
-        }
-    }
+   
 }

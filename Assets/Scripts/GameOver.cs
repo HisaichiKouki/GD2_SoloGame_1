@@ -7,7 +7,7 @@ public class GameOver : MonoBehaviour
     public GameObject gameOverText;
     public int endCount;
     public SetTextScript gatext;
-    public void EndCountUp(int value) { endCount -= value; gatext.SetText(endCount); }
+    public void EndCountUp(int value) { endCount += value; gatext.SetText(endCount); }
 
     public float totalTime;
     float curTime;

@@ -31,15 +31,18 @@ public class HumanSpawnManager : MonoBehaviour
 
     public void NextStation()
     {
+
+        SpawnSizeUp();
+        HumanReset();
+        spawnNum += 10;
+        trainManager.SetTotalCount(spawnNum);
+        HumanSpawn();
+    }
+    public void SpawnSizeUp()
+    {
         Vector3 newSize = spawnArea.transform.localScale;
         newSize.y += addSize;
         spawnArea.transform.localScale = newSize;
-
-        HumanReset();
-        spawnNum += 10;
-        //Debug.Log("SpawnNum=" + spawnNum);
-        trainManager.SetTotalCount(spawnNum);
-        HumanSpawn();
     }
 
     void HumanSpawn()

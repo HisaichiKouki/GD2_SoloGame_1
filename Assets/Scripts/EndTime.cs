@@ -11,7 +11,11 @@ public class EndTime : MonoBehaviour
     [SerializeField] SetTextScript remainingText;
     float remainingTime;
     public float GetRemaingTime() { return remainingTime; }
-    public void ResetTime() { totalTime += addTime; remainingTime = totalTime; }
+    public void ResetTime()
+    {
+        totalTime += addTime;
+        remainingTime = totalTime;
+    }
     void Start()
     {
         remainingTime = totalTime;

@@ -22,11 +22,11 @@ public class TrainManager : MonoBehaviour
     public void TrainIn()
     {
         count++;
-        //Debug.Log("TrainIn");
         totalCount--;
         remainingText.SetText(totalCount);
         gotoTrainText.SetText(count);
     }
+    //l‚ª€‚ñ‚¾
     public void DeadCount()
     {
         totalCount--;
@@ -34,8 +34,9 @@ public class TrainManager : MonoBehaviour
         remainingText.SetText(totalCount);
         deadText.SetText(deadCount);
 
-        gameOver.EndCountUp(1);
+        gameOver.EndCountUp(-1);
     }
+    //ˆ«Ò‚ªæ‚Á‚½
     public void BadTrainIn()
     {
         //Debug.Log("TrainIn");
@@ -43,16 +44,17 @@ public class TrainManager : MonoBehaviour
         totalCount--;
         remainingText.SetText(totalCount);
         badGotoTrainText.SetText(badCount);
-        gameOver.EndCountUp(8);
+        gameOver.EndCountUp(-8);
 
     }
+    //ˆ«Ò‚ğE‚µ‚½‚Æ‚«
     public void BadDeadCount()
     {
         totalCount--;
         badDeadCount++;
         remainingText.SetText(totalCount);
         badDeadText.SetText(badDeadCount);
-        gameOver.EndCountUp(-5);
+        gameOver.EndCountUp(5);
 
     }
     public void SetTotalCount(int value)
@@ -74,9 +76,6 @@ public class TrainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (totalCount <= 0) 
-        //{
-        //    humanSpawnManager.NextStation();
-        //}
+        
     }
 }
