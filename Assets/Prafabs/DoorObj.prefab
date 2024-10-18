@@ -134,8 +134,8 @@ MonoBehaviour:
   doorObj:
   - {fileID: 2202369309626022291}
   - {fileID: 1276034646768868674}
-  openPos: 1.8
-  totalTime: 0.2
+  openPos: 1.4
+  totalTime: 0.15
   timeShortening: 0
   minTime: 0.1
   closeTimeEaseT: 0.15

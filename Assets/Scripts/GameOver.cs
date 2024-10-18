@@ -24,7 +24,7 @@ public class GameOver : MonoBehaviour
         if (endCount <= 0)
         {
             curTime += Time.deltaTime;
-            if (totalTime > curTime)
+            if (curTime>totalTime)
             {
                 gameOverText.SetActive(true);
 

@@ -100,8 +100,6 @@ public class DoorScript : MonoBehaviour
 
     void StationEnd()
     {
-        // if (endTime.GetRemaingTime() > 0) { return; }
-        //if (trainManager.GetTotalCount() > 0) { return; }
 
         if (endTime.GetRemaingTime() <= 0 || trainManager.GetTotalCount() <= 0)
         {
@@ -109,7 +107,6 @@ public class DoorScript : MonoBehaviour
             currentMove = Mathf.Clamp(currentMove - Time.deltaTime * 2, 0, 1);
             if (closeTime >= closeTotalTime)
             {
-                //Debug.Log("count=" + trainManager.GetTotalCount());
                 gameOver.EndCountUp(-trainManager.GetTotalCount()*3);
                 if (trainManager.GetTotalCount()<=0)
                 {

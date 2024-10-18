@@ -1391,14 +1391,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6066594670391857300, guid: a6bc6e9c9e475e848b97f41465c7649e, type: 3}
-      propertyPath: openPos
-      value: 1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066594670391857300, guid: a6bc6e9c9e475e848b97f41465c7649e, type: 3}
-      propertyPath: totalTime
-      value: 0.15
-      objectReference: {fileID: 0}
     - target: {fileID: 8703880332366334238, guid: a6bc6e9c9e475e848b97f41465c7649e, type: 3}
       propertyPath: m_Name
       value: DoorObj
