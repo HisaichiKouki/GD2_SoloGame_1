@@ -404,6 +404,9 @@ MonoBehaviour:
   moveRatio: 100
   doorLength: 2
   badRatio: 50
+  minBodySize: 0
+  maxBodySize: 1
+  noppoRatio: 50
   bodyColor: {fileID: 7093687961912709479}
   humanMoveRatio: 0.9
   debugText: 

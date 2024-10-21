@@ -15,6 +15,9 @@ public class HumanScript : MonoBehaviour
     [SerializeField] float moveRatio;//ドアから遠い程少しの開閉で止まるように
     [SerializeField] float doorLength;//ドアに入ったくらいの距離では止まらないように
     [SerializeField] float badRatio;//悪者になる割合
+    [SerializeField] float minBodySize;
+    [SerializeField] float maxBodySize;
+    [SerializeField] float noppoRatio;//デブかノッポの割合
     Rigidbody2D mRigidbody;
     public SpriteRenderer bodyColor;
     Vector2 dif;
@@ -23,6 +26,7 @@ public class HumanScript : MonoBehaviour
     Vector2 moveVec;
     public float humanMoveRatio;
     bool thisBadMan;
+
 
     public string debugText;
     // Start is called before the first frame update
@@ -48,6 +52,21 @@ public class HumanScript : MonoBehaviour
         {
             humanMoveRatio /= 2;
         }
+
+        //ノッポかデブか判定を取り、サイズを加算
+        float isNoppo = Random.Range(0, 100);
+        Vector3 newSize = transform.localScale;
+        if (isNoppo <= noppoRatio)
+        {
+            newSize.y += Random.Range(minBodySize, maxBodySize);
+        }
+        else
+        {
+            newSize.x += Random.Range(minBodySize, maxBodySize);
+
+        }
+        transform.localScale = newSize;
+
     }
 
     // Update is called once per frame
@@ -61,7 +80,7 @@ public class HumanScript : MonoBehaviour
         //humanMoveRatio = Mathf.Clamp((dif.magnitude * dif.magnitude) / moveRatio, 0.4f, 1.0f);
         //debugText = "";
         Move();
-        GotoTrain();
+        //GotoTrain();
         Dead();
         //debugText += mRigidbody.velocity;
         debugText = "\nlength=" + dif.magnitude + "\nRaito=" + (dif.magnitude * dif.magnitude) / moveRatio + "\nhumanMoveRatio=" + humanMoveRatio;
@@ -77,12 +96,25 @@ public class HumanScript : MonoBehaviour
             return;
         }
 
-        if (doorScript.GetOpenRatio() < humanMoveRatio)
+        if (thisBadMan)
         {
-            mRigidbody.velocity = new Vector2(0, 0);
+            if (doorScript.GetOpenRatio() < humanMoveRatio)
+            {
+                mRigidbody.velocity = moveVec/2;
 
-            return;
+                return;
+            }
         }
+        else 
+        {
+            if (doorScript.GetOpenRatio() < humanMoveRatio)
+            {
+                mRigidbody.velocity = new Vector2(0, 0);
+
+                return;
+            }
+        }
+        
         mRigidbody.velocity = moveVec;
 
     }
@@ -97,7 +129,7 @@ public class HumanScript : MonoBehaviour
             if (!isDead)
             {
                 Debug.Log("Dead");
-                
+
                 if (thisBadMan)
                 {
                     trainManager.BadDeadCount();
@@ -113,7 +145,7 @@ public class HumanScript : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-   
+
     //乗車処理
     void GotoTrain()
     {
@@ -134,7 +166,7 @@ public class HumanScript : MonoBehaviour
                 {
                     trainManager.TrainIn();
                 }
-                   
+
             }
             getOnFlag = true;
             //テスト用に人を削除する
@@ -143,5 +175,25 @@ public class HumanScript : MonoBehaviour
         }
 
     }
-   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "InsideCollider")
+        {
+            if (!getOnFlag)
+            {
+                if (thisBadMan)
+                {
+                    trainManager.BadTrainIn();
+                }
+                else
+                {
+                    trainManager.TrainIn();
+                }
+
+            }
+            getOnFlag = true;
+            //テスト用に人を削除する
+            Destroy(this.gameObject);
+        }
+    }
 }
