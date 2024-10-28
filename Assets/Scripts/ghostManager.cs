@@ -9,15 +9,25 @@ public class ghostManager : MonoBehaviour
     [SerializeField] float interval;//—ñ‚ÌŠÔŠu
     [SerializeField] GameObject ghostSpownPoint;
     [SerializeField] float initMoveTime;
+    float curMoveTime;
     [SerializeField] GameObject goodText;
     [SerializeField] GameObject badText;
-    float curMoveTime;
+    [SerializeField] float maxStandbyTime;
+    float curmaxStandbyTime;
+    float curStandbyTime;
+    [SerializeField] GaugeScript remainingTimeGauge;
+
     List<ghostScript> ghosts = new List<ghostScript>();
 
 
     // Start is called before the first frame update
     void Start()
     {
+        //—P—\ŠÔ‚Ì‰Šú‰»
+        curmaxStandbyTime = maxStandbyTime;
+        curStandbyTime = curmaxStandbyTime;
+        remainingTimeGauge.SetMaxValue(curmaxStandbyTime);
+        //ƒS[ƒXƒg‚Ì‰Šú‰»
         for (int i = 0; i < initNum; i++)
         {
             ghostScript ghost = Instantiate(ghostPrefab);
@@ -25,13 +35,16 @@ public class ghostManager : MonoBehaviour
             ghost.transform.parent = ghostSpownPoint.transform;
             ghosts.Add(ghost);
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         Sorting();
         ProgressMove();
+        GaugeChange();
     }
 
     void Sorting()
@@ -45,6 +58,7 @@ public class ghostManager : MonoBehaviour
                 EvaluationAnime(Ghost_Type.NORMAL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
+                curStandbyTime = curmaxStandbyTime;
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -55,6 +69,7 @@ public class ghostManager : MonoBehaviour
                 EvaluationAnime(Ghost_Type.EVIL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
+                curStandbyTime = curmaxStandbyTime;
             }
         }
     }
@@ -108,5 +123,12 @@ public class ghostManager : MonoBehaviour
         {
             Instantiate(badText);
         }
+    }
+
+    void GaugeChange()
+    {
+        if (curMoveTime > 0) { return; }
+        curStandbyTime -=Time.deltaTime;
+        remainingTimeGauge.SetCurrentValue(curStandbyTime);
     }
 }
