@@ -167,15 +167,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82601a71d0160bf4b99584831fe06106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostPrefab: {fileID: 254007660751611121, guid: b41289757c004444e92af5ea6c79f748, type: 3}
+  addGameTime: 0.5
   initNum: 10
+  addGhostNum: 5
   interval: 3
-  ghostSpownPoint: {fileID: 921512707}
+  maxStandbyTime: 2
   initMoveTime: 1
+  ghostSpownPoint: {fileID: 921512707}
   goodText: {fileID: 4339845691942960977, guid: d991d9cd5aa4a424292914e2c6cf664e, type: 3}
   badText: {fileID: 4339845691942960977, guid: d3093e20554753341b57a4e0f37d33df, type: 3}
-  maxStandbyTime: 1
+  ghostPrefab: {fileID: 254007660751611121, guid: b41289757c004444e92af5ea6c79f748, type: 3}
   remainingTimeGauge: {fileID: 1814671947}
+  debugText: 
 --- !u!1 &218101139
 GameObject:
   m_ObjectHideFlags: 0
