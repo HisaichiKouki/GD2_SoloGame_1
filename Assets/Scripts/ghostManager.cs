@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ghostManager : MonoBehaviour
 {
@@ -12,15 +13,23 @@ public class ghostManager : MonoBehaviour
     [SerializeField] float interval;//列の間隔
     [SerializeField] float maxStandbyTime;//最大猶予時間
     [SerializeField] float initMoveTime;
+    [SerializeField] int maxHitPoint;
+
     float curMoveTime;
+    float curmaxStandbyTime;
+    float curStandbyTime;
+    int curHitPoint;
     [Header("プレハブ")]
     [SerializeField] GameObject ghostSpownPoint;
     [SerializeField] GameObject goodText;
     [SerializeField] GameObject badText;
+    [SerializeField] GameObject damageText;
+    [SerializeField] GameObject gameOverText;
     [SerializeField] ghostScript ghostPrefab;
-    float curmaxStandbyTime;
-    float curStandbyTime;
     [SerializeField] GaugeScript remainingTimeGauge;
+    [SerializeField] GaugeScript hitPointGauge;
+
+
 
     List<ghostScript> ghosts = new List<ghostScript>();
     bool nextWaveFlag;
@@ -34,11 +43,20 @@ public class ghostManager : MonoBehaviour
         GhostInit();
         //最初は1にする
         Time.timeScale = 1;
+        curHitPoint = maxHitPoint;
+        hitPointGauge.SetMaxValue(maxHitPoint);
+        hitPointGauge.SetCurrentValue(curHitPoint);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("GameScene");
+        }
+
+        if (curHitPoint<=0) { return;}
         debugText = "";
         //ゴーストがいなくなって移動カウントも終わった時に次のフェーズへ行く
         if (curMoveTime <= 0 && ghosts.Count <= 0)
@@ -49,7 +67,7 @@ public class ghostManager : MonoBehaviour
         ProgressMove();
         GaugeChange();
         GhostInit();
-        debugText += "ghosts.Count="+ghosts.Count+ "\ncurMoveTime=" + curMoveTime;
+        debugText += "ghosts.Count=" + ghosts.Count + "\ncurMoveTime=" + curMoveTime + "\nTime.timeScale" + Time.timeScale;
     }
 
     void GhostInit()
@@ -88,7 +106,7 @@ public class ghostManager : MonoBehaviour
     void Sorting()
     {
         if (curMoveTime > 0) { return; }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow)|| Input.GetKeyDown(KeyCode.A))
         {
             if (ghosts.Count > 0)
             {
@@ -99,7 +117,7 @@ public class ghostManager : MonoBehaviour
                 curStandbyTime = curmaxStandbyTime;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow)|| Input.GetKeyDown(KeyCode.D))
         {
             if (ghosts.Count > 0)
             {
@@ -122,10 +140,20 @@ public class ghostManager : MonoBehaviour
         else
         {
             Debug.Log("False");
+            Damage();
             return false;
         }
     }
-
+    void Damage()
+    {
+        curHitPoint--;
+        hitPointGauge.SetCurrentValue(curHitPoint);
+        Instantiate(damageText);
+        if (curHitPoint <= 0)
+        {
+            Instantiate(gameOverText);
+        }
+    }
     void DestroyObj()
     {
         // Destroy(ghosts[0].gameObject);
@@ -146,6 +174,7 @@ public class ghostManager : MonoBehaviour
             ghosts[i].transform.position = newPos;
 
         }
+       
     }
 
     void EvaluationAnime(Ghost_Type type)
@@ -165,6 +194,11 @@ public class ghostManager : MonoBehaviour
         if (curMoveTime > 0) { return; }
         curStandbyTime -= Time.deltaTime;
         remainingTimeGauge.SetCurrentValue(curStandbyTime);
+        if (curStandbyTime <= 0)
+        {
+            Damage();
+            curStandbyTime = curmaxStandbyTime;
+        }
     }
 
 }

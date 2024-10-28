@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 1813984803731884946}
   - component: {fileID: 4479052251726618554}
   - component: {fileID: 5172860672948853712}
-  - component: {fileID: 8914518629547315829}
   m_Layer: 5
-  m_Name: BadText
+  m_Name: GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,18 +102,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8914518629547315829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4339845691942960977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce1e479caa41a14ca60907f2d107b1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7750111791438778854
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +113,6 @@ GameObject:
   - component: {fileID: 352739630899708544}
   - component: {fileID: 5268973720297178634}
   - component: {fileID: 2058344359273007770}
-  - component: {fileID: 3996944254603370925}
   m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -174,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.1451273, b: 1, a: 1}
+  m_Color: {r: 0.19767144, g: 0.019607833, b: 0.90588236, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -194,25 +180,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bad...
---- !u!95 &3996944254603370925
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7750111791438778854}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 861654ac0c104b742b83d9acfdf65a33, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_Text: GameOver

@@ -7,9 +7,13 @@ public class GaugeScript : MonoBehaviour
 {
     Slider slider;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        slider = GetComponent<Slider>();
+
+    }
     void Start()
     {
-        slider=GetComponent<Slider>();
     }
 
     public void SetCurrentValue(float ratio) { slider.value = ratio; }
