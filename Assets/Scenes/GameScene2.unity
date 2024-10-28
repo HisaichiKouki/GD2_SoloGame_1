@@ -171,6 +171,7 @@ MonoBehaviour:
   initNum: 3
   interval: 3
   ghostSpownPoint: {fileID: 921512707}
+  initMoveTime: 1
 --- !u!1 &218101139
 GameObject:
   m_ObjectHideFlags: 0

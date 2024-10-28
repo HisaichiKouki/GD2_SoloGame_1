@@ -29,7 +29,7 @@ public class ghostManager : MonoBehaviour
     void Update()
     {
         Sorting();
-
+        ProgressMove();
     }
 
     void Sorting()
@@ -90,7 +90,7 @@ public class ghostManager : MonoBehaviour
         for (int i = 0; i < ghosts.Count; i++)
         {
             Vector3 newPos = ghosts[i].transform.position;
-            newPos.y -= interval;
+            newPos.y = Mathf.Lerp(i*interval,(i+1)*interval,easeT);
             ghosts[i].transform.position = newPos;
 
         }
