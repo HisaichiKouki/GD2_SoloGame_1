@@ -31,6 +31,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] GaugeScript remainingTimeGauge;
     [SerializeField] GaugeScript hitPointGauge;
     [SerializeField] SetTextScript scoreText;
+    [SerializeField] AnimationReset scoreTextResetAnime;
 
 
 
@@ -142,6 +143,7 @@ public class ghostManager : MonoBehaviour
             Debug.Log("True");
             score++;
             scoreText.SetText(score);
+            scoreTextResetAnime.ResetAnime();
             return true;
         }
         else
