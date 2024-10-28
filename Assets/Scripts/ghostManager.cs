@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ghostManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class ghostManager : MonoBehaviour
     float curmaxStandbyTime;
     float curStandbyTime;
     int curHitPoint;
+    int score;
     [Header("ƒvƒŒƒnƒu")]
     [SerializeField] GameObject ghostSpownPoint;
     [SerializeField] GameObject goodText;
@@ -28,6 +30,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] ghostScript ghostPrefab;
     [SerializeField] GaugeScript remainingTimeGauge;
     [SerializeField] GaugeScript hitPointGauge;
+    [SerializeField] SetTextScript scoreText;
 
 
 
@@ -46,6 +49,8 @@ public class ghostManager : MonoBehaviour
         curHitPoint = maxHitPoint;
         hitPointGauge.SetMaxValue(maxHitPoint);
         hitPointGauge.SetCurrentValue(curHitPoint);
+        score = 0;
+        scoreText.SetText(score);
     }
 
     // Update is called once per frame
@@ -135,6 +140,8 @@ public class ghostManager : MonoBehaviour
         if (ghosts[0].GetType() == type)
         {
             Debug.Log("True");
+            score++;
+            scoreText.SetText(score);
             return true;
         }
         else
