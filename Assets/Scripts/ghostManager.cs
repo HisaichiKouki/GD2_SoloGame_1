@@ -9,6 +9,8 @@ public class ghostManager : MonoBehaviour
     [SerializeField] float interval;//—ñ‚ÌŠÔŠu
     [SerializeField] GameObject ghostSpownPoint;
     [SerializeField] float initMoveTime;
+    [SerializeField] GameObject goodText;
+    [SerializeField] GameObject badText;
     float curMoveTime;
     List<ghostScript> ghosts = new List<ghostScript>();
 
@@ -35,22 +37,22 @@ public class ghostManager : MonoBehaviour
     void Sorting()
     {
         if (curMoveTime > 0) { return; }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (ghosts.Count > 0)
             {
                 ghosts[0].SetAnimetion("GoHeaven");
-                Discrimination(Ghost_Type.NORMAL);
+                EvaluationAnime(Ghost_Type.NORMAL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (ghosts.Count > 0)
             {
                 ghosts[0].SetAnimetion("GoHell");
-                Discrimination(Ghost_Type.NORMAL);
+                EvaluationAnime(Ghost_Type.EVIL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
             }
@@ -93,6 +95,18 @@ public class ghostManager : MonoBehaviour
             newPos.y = Mathf.Lerp(i*interval,(i+1)*interval,easeT);
             ghosts[i].transform.position = newPos;
 
+        }
+    }
+
+    void EvaluationAnime(Ghost_Type type)
+    {
+        if (Discrimination(type))
+        {
+            Instantiate(goodText);
+        }
+        else
+        {
+            Instantiate(badText);
         }
     }
 }
