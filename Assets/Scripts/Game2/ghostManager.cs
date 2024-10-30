@@ -15,12 +15,15 @@ public class ghostManager : MonoBehaviour
     [SerializeField] float maxStandbyTime;//最大猶予時間
     [SerializeField] float initMoveTime;
     [SerializeField] int maxHitPoint;
+    [SerializeField] float waveStandbyTime;
 
     float curMoveTime;
     float curmaxStandbyTime;
     float curStandbyTime;
+    float curWaveStandbyTime;
     int curHitPoint;
     int score;
+    int curWaveCount;
     [Header("プレハブ")]
     [SerializeField] GameObject ghostSpownPoint;
     [SerializeField] GameObject goodText;
@@ -32,11 +35,13 @@ public class ghostManager : MonoBehaviour
     [SerializeField] GaugeScript hitPointGauge;
     [SerializeField] SetTextScript scoreText;
     [SerializeField] AnimationReset scoreTextResetAnime;
+    [SerializeField] GameObject nextWaveTextPrefab;
 
 
 
     List<ghostScript> ghosts = new List<ghostScript>();
     bool nextWaveFlag;
+    bool spawnNextWaveText;
 
     public string debugText;
     // Start is called before the first frame update
@@ -47,11 +52,15 @@ public class ghostManager : MonoBehaviour
         GhostInit();
         //最初は1にする
         Time.timeScale = 1;
+
         curHitPoint = maxHitPoint;
         hitPointGauge.SetMaxValue(maxHitPoint);
         hitPointGauge.SetCurrentValue(curHitPoint);
         score = 0;
         scoreText.SetText(score);
+
+        curWaveStandbyTime = waveStandbyTime;
+        curWaveCount = 0;
     }
 
     // Update is called once per frame
@@ -62,7 +71,7 @@ public class ghostManager : MonoBehaviour
             SceneManager.LoadScene("GameScene");
         }
 
-        if (curHitPoint<=0) { return;}
+        if (curHitPoint <= 0) { return; }
         debugText = "";
         //ゴーストがいなくなって移動カウントも終わった時に次のフェーズへ行く
         if (curMoveTime <= 0 && ghosts.Count <= 0)
@@ -73,13 +82,18 @@ public class ghostManager : MonoBehaviour
         ProgressMove();
         GaugeChange();
         GhostInit();
+        WaveStandby();
         debugText += "ghosts.Count=" + ghosts.Count + "\ncurMoveTime=" + curMoveTime + "\nTime.timeScale" + Time.timeScale;
     }
 
+    //初期化
     void GhostInit()
     {
         if (!nextWaveFlag) { return; }
+        if (curWaveStandbyTime > 0) { return; }
         nextWaveFlag = false;
+        curWaveStandbyTime = waveStandbyTime;
+        spawnNextWaveText = false;
         for (int i = 0; i < initNum; i++)
         {
             ghostScript ghost = Instantiate(ghostPrefab);
@@ -111,8 +125,9 @@ public class ghostManager : MonoBehaviour
     //仕分けの操作
     void Sorting()
     {
+        if (nextWaveFlag) { return; }
         if (curMoveTime > 0) { return; }
-        if (Input.GetKey(KeyCode.LeftArrow)|| Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             if (ghosts.Count > 0)
             {
@@ -123,7 +138,7 @@ public class ghostManager : MonoBehaviour
                 curStandbyTime = curmaxStandbyTime;
             }
         }
-        else if (Input.GetKey(KeyCode.RightArrow)|| Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             if (ghosts.Count > 0)
             {
@@ -135,7 +150,7 @@ public class ghostManager : MonoBehaviour
             }
         }
     }
-
+    //判定処理
     bool Discrimination(Ghost_Type type)
     {
         if (ghosts[0].GetType() == type)
@@ -153,6 +168,7 @@ public class ghostManager : MonoBehaviour
             return false;
         }
     }
+    //ミスした時のダメージ
     void Damage()
     {
         curHitPoint--;
@@ -163,13 +179,14 @@ public class ghostManager : MonoBehaviour
             Instantiate(gameOverText);
         }
     }
+    //判定が終わったらリストから削除する
     void DestroyObj()
     {
         // Destroy(ghosts[0].gameObject);
         ghosts.RemoveAt(0);
         //Debug.Log("After removal: " + string.Join(", ", ghosts));
     }
-
+    //列を前に詰める処理
     void ProgressMove()
     {
         if (curMoveTime <= 0) { return; }
@@ -183,9 +200,9 @@ public class ghostManager : MonoBehaviour
             ghosts[i].transform.position = newPos;
 
         }
-       
-    }
 
+    }
+    //正誤の演出
     void EvaluationAnime(Ghost_Type type)
     {
         if (Discrimination(type))
@@ -197,9 +214,10 @@ public class ghostManager : MonoBehaviour
             Instantiate(badText);
         }
     }
-
+    //止まってるときの猶予時間
     void GaugeChange()
     {
+        if (nextWaveFlag) { return; }
         if (curMoveTime > 0) { return; }
         curStandbyTime -= Time.deltaTime;
         remainingTimeGauge.SetCurrentValue(curStandbyTime);
@@ -208,6 +226,19 @@ public class ghostManager : MonoBehaviour
             Damage();
             curStandbyTime = curmaxStandbyTime;
         }
+    }
+    //ウェーブ開始時の処理
+    void WaveStandby()
+    {
+        if (!nextWaveFlag) { return; }
+        if (!spawnNextWaveText)
+        {
+            GameObject nextWaveText=Instantiate(nextWaveTextPrefab);
+            nextWaveText.transform.GetChild(0).GetComponent<SetTextScript>().SetText(curWaveCount);
+            curWaveCount++;
+            spawnNextWaveText = true;
+        }
+        curWaveStandbyTime -= Time.deltaTime;
     }
 
 }
