@@ -167,14 +167,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82601a71d0160bf4b99584831fe06106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addGameTime: 0.5
+  addGameTime: 0.2
   initNum: 3
-  addGhostNum: 5
+  addGhostNum: 2
   interval: 3
   maxStandbyTime: 3
   initMoveTime: 0.5
   maxHitPoint: 4
-  waveStandbyTime: 2.45
+  waveStandbyTime: 3
   ghostSpownPoint: {fileID: 921512707}
   goodText: {fileID: 4339845691942960977, guid: d991d9cd5aa4a424292914e2c6cf664e, type: 3}
   badText: {fileID: 4339845691942960977, guid: d3093e20554753341b57a4e0f37d33df, type: 3}
