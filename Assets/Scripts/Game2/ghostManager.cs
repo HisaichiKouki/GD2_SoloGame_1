@@ -112,7 +112,7 @@ public class ghostManager : MonoBehaviour
     void Sorting()
     {
         if (curMoveTime > 0) { return; }
-        if (Input.GetKeyDown(KeyCode.LeftArrow)|| Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow)|| Input.GetKeyDown(KeyCode.A))
         {
             if (ghosts.Count > 0)
             {
@@ -123,7 +123,7 @@ public class ghostManager : MonoBehaviour
                 curStandbyTime = curmaxStandbyTime;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow)|| Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKey(KeyCode.RightArrow)|| Input.GetKeyDown(KeyCode.D))
         {
             if (ghosts.Count > 0)
             {

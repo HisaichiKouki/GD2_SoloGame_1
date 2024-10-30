@@ -172,7 +172,7 @@ MonoBehaviour:
   addGhostNum: 5
   interval: 3
   maxStandbyTime: 3
-  initMoveTime: 1
+  initMoveTime: 0.5
   maxHitPoint: 4
   ghostSpownPoint: {fileID: 921512707}
   goodText: {fileID: 4339845691942960977, guid: d991d9cd5aa4a424292914e2c6cf664e, type: 3}
