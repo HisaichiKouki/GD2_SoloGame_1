@@ -46,6 +46,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] ShakeScript cameraShakeScript;
     [SerializeField] GameObject evalutionCharaSpownPoitnt;
     [SerializeField] GameObject[] evalutionCharas;
+    //[SerializeField] ShakeScript charsShake;
 
 
 
@@ -53,7 +54,7 @@ public class ghostManager : MonoBehaviour
     bool nextWaveFlag;
     bool spawnNextWaveText;
     bool ghostInitFlag;
-
+    bool missPlaying;
     bool preSuccesFlag;
     bool curSuccesFlag;
     public string debugText;
@@ -79,6 +80,7 @@ public class ghostManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        missPlaying = false;//ミスした時のフラグを最初にfalseにしておく
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("GameScene");
@@ -217,7 +219,7 @@ public class ghostManager : MonoBehaviour
     void EvaluationAnime(Ghost_Type type)
     {
         preSuccesFlag = curSuccesFlag;
-
+        
         //正しいとき
         if (Discrimination(type))
         { //Debug.Log("True");
@@ -256,8 +258,10 @@ public class ghostManager : MonoBehaviour
             //Debug.Log("False");
             Damage();
             curSuccesFlag = false;
+            missPlaying = true;
             curConbo = 0;
             cameraShakeScript.ShakeStart();
+            //charsShake.ShakeStart();
             Instantiate(badText);
         }
     }
@@ -302,5 +306,5 @@ public class ghostManager : MonoBehaviour
         }
     }
     float GetStandbyTimeRatio() { return (curStandbyTime / curmaxStandbyTime); }
-
+    public bool GetMissPlaying() { return missPlaying; }
 }
