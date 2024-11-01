@@ -24,6 +24,7 @@ public class ghostManager : MonoBehaviour
     int curHitPoint;
     int score;
     int curWaveCount;
+    int curConbo;
     [Header("プレハブ")]
     [SerializeField] GameObject ghostSpownPoint;
     [SerializeField] GameObject goodText;
@@ -46,6 +47,8 @@ public class ghostManager : MonoBehaviour
     bool spawnNextWaveText;
     bool ghostInitFlag;
 
+    bool preSuccesFlag;
+    bool curSuccesFlag;
     public string debugText;
     // Start is called before the first frame update
     void Start()
@@ -158,18 +161,30 @@ public class ghostManager : MonoBehaviour
     //判定処理
     bool Discrimination(Ghost_Type type)
     {
+        preSuccesFlag = curSuccesFlag;
         if (ghosts[0].GetType() == type)
         {
-            Debug.Log("True");
+            //Debug.Log("True");
             score++;
             scoreText.SetText(score);
             scoreTextResetAnime.ResetAnime();
+            curSuccesFlag = true;
+            //preSuccesFlagcurSuccesFlag==Trueの時に
+            //コンボが継続する演出
+            if (preSuccesFlag && curSuccesFlag)
+            {
+                curConbo++;
+
+            }
+            Debug.Log("CurConbo="+curConbo);
             return true;
         }
         else
         {
-            Debug.Log("False");
+            //Debug.Log("False");
             Damage();
+            curSuccesFlag = false;
+            curConbo = 0;
             return false;
         }
     }
