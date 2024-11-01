@@ -16,6 +16,9 @@ public class ghostManager : MonoBehaviour
     [SerializeField] float initMoveTime;
     [SerializeField] int maxHitPoint;
     [SerializeField] float waveStandbyTime;
+    [SerializeField] float parfectRatio;
+    [SerializeField] float goodRatio;
+
 
     float curMoveTime;
     float curmaxStandbyTime;
@@ -28,6 +31,8 @@ public class ghostManager : MonoBehaviour
     [Header("ƒvƒŒƒnƒu")]
     [SerializeField] GameObject ghostSpownPoint;
     [SerializeField] GameObject goodText;
+    [SerializeField] GameObject niceText;
+    [SerializeField] GameObject parfectText;
     [SerializeField] GameObject badText;
     [SerializeField] GameObject damageText;
     [SerializeField] GameObject gameOverText;
@@ -158,33 +163,17 @@ public class ghostManager : MonoBehaviour
             }
         }
     }
-    //”»’èˆ—
+    //”»’èˆ—‚¾‚¯
     bool Discrimination(Ghost_Type type)
     {
-        preSuccesFlag = curSuccesFlag;
         if (ghosts[0].GetType() == type)
         {
-            //Debug.Log("True");
-            score++;
-            scoreText.SetText(score);
-            scoreTextResetAnime.ResetAnime();
-            curSuccesFlag = true;
-            //preSuccesFlagcurSuccesFlag==True‚ÌŽž‚É
-            //ƒRƒ“ƒ{‚ªŒp‘±‚·‚é‰‰o
-            if (preSuccesFlag && curSuccesFlag)
-            {
-                curConbo++;
 
-            }
-            Debug.Log("CurConbo="+curConbo);
             return true;
         }
         else
         {
-            //Debug.Log("False");
-            Damage();
-            curSuccesFlag = false;
-            curConbo = 0;
+
             return false;
         }
     }
@@ -225,18 +214,49 @@ public class ghostManager : MonoBehaviour
     //³Œë‚Ì‰‰o
     void EvaluationAnime(Ghost_Type type)
     {
+        preSuccesFlag = curSuccesFlag;
+
         //³‚µ‚¢‚Æ‚«
         if (Discrimination(type))
-        {
-            Instantiate(goodText);
+        { //Debug.Log("True");
+            score++;
+            scoreText.SetText(score);
+            scoreTextResetAnime.ResetAnime();
+            curSuccesFlag = true;
+            //preSuccesFlagcurSuccesFlag==True‚ÌŽž‚É
+            //ƒRƒ“ƒ{‚ªŒp‘±‚·‚é‰‰o
+            if (preSuccesFlag && curSuccesFlag)
+            {
+                curConbo++;
+            }
+            Debug.Log("CurConbo=" + curConbo);
+
+            if (GetStandbyTimeRatio() > parfectRatio)
+            {
+                Instantiate(parfectText);
+            }
+            else if (GetStandbyTimeRatio() > goodRatio)
+            {
+                Instantiate(goodText);
+            }
+            else
+            {
+                Instantiate(niceText);
+            }
+            
         }
         else
         {
             //ŠÔˆá‚¦‚½‚Æ‚«
+            //Debug.Log("False");
+            Damage();
+            curSuccesFlag = false;
+            curConbo = 0;
             cameraShakeScript.ShakeStart();
             Instantiate(badText);
         }
     }
+
     //Ž~‚Ü‚Á‚Ä‚é‚Æ‚«‚Ì—P—\ŽžŠÔ
     void GaugeChange()
     {
@@ -276,5 +296,6 @@ public class ghostManager : MonoBehaviour
             spawnNextWaveText = false;
         }
     }
+    float GetStandbyTimeRatio() { return (curStandbyTime / curmaxStandbyTime); }
 
 }
