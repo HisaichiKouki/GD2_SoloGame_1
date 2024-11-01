@@ -44,6 +44,8 @@ public class ghostManager : MonoBehaviour
     [SerializeField] GameObject nextWaveTextPrefab;
     [SerializeField] GameObject goToHevenPrefab;
     [SerializeField] ShakeScript cameraShakeScript;
+    [SerializeField] GameObject evalutionCharaSpownPoitnt;
+    [SerializeField] GameObject[] evalutionCharas;
 
 
 
@@ -234,14 +236,17 @@ public class ghostManager : MonoBehaviour
             if (GetStandbyTimeRatio() > parfectRatio)
             {
                 Instantiate(parfectText);
+                Instantiate(evalutionCharas[0], evalutionCharaSpownPoitnt.transform);
             }
             else if (GetStandbyTimeRatio() > goodRatio)
             {
                 Instantiate(goodText);
+                Instantiate(evalutionCharas[1], evalutionCharaSpownPoitnt.transform);
             }
             else
             {
                 Instantiate(niceText);
+                Instantiate(evalutionCharas[2], evalutionCharaSpownPoitnt.transform);
             }
             
         }
