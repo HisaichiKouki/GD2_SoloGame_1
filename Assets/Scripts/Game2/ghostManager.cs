@@ -36,6 +36,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] SetTextScript scoreText;
     [SerializeField] AnimationReset scoreTextResetAnime;
     [SerializeField] GameObject nextWaveTextPrefab;
+    [SerializeField] GameObject goToHevenPrefab;
 
 
 
@@ -136,6 +137,8 @@ public class ghostManager : MonoBehaviour
                 DestroyObj();
                 curMoveTime = initMoveTime;
                 curStandbyTime = curmaxStandbyTime;
+
+               
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))

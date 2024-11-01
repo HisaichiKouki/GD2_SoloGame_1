@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 245527896853905347}
   - component: {fileID: 254007660751611121}
   - component: {fileID: 8315473148452599530}
+  - component: {fileID: 3283187232319037473}
+  - component: {fileID: 7563059285101491732}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -71,6 +73,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3283187232319037473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3845667980903740915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3145b02032fbd04c909b000f95e83df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gotoHevenPrefab: {fileID: 1921132416337671042, guid: a1a44f963b9980c419dee9e84b55a06e, type: 3}
+--- !u!114 &7563059285101491732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3845667980903740915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e833e6d697b4a014faf39354452d5eb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gotoHellPrefab: {fileID: 1504946843907320716, guid: c1732d40afbe4fc4b9f94c5e7c1cfc35, type: 3}
 --- !u!1 &6823096572341187927
 GameObject:
   m_ObjectHideFlags: 0

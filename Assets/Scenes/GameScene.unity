@@ -186,6 +186,7 @@ MonoBehaviour:
   scoreText: {fileID: 1331069165}
   scoreTextResetAnime: {fileID: 1331069167}
   nextWaveTextPrefab: {fileID: 4339845691942960977, guid: 9c5ffc1ffbfa45647b37020f4364a9bb, type: 3}
+  goToHevenPrefab: {fileID: 1921132416337671042, guid: a1a44f963b9980c419dee9e84b55a06e, type: 3}
   debugText: 
 --- !u!1 &147953302
 GameObject:
