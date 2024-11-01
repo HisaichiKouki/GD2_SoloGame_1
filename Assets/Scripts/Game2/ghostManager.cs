@@ -44,12 +44,12 @@ public class ghostManager : MonoBehaviour
     List<ghostScript> ghosts = new List<ghostScript>();
     bool nextWaveFlag;
     bool spawnNextWaveText;
+    bool ghostInitFlag;
 
     public string debugText;
     // Start is called before the first frame update
     void Start()
     {
-        nextWaveFlag = true;
         //猶予時間の初期化
         GhostInit();
         //最初は1にする
@@ -63,6 +63,7 @@ public class ghostManager : MonoBehaviour
 
         curWaveStandbyTime = waveStandbyTime;
         curWaveCount = 0;
+        nextWaveFlag = false;
     }
 
     // Update is called once per frame
@@ -83,7 +84,7 @@ public class ghostManager : MonoBehaviour
         Sorting();
         ProgressMove();
         GaugeChange();
-        GhostInit();
+        //GhostInit();
         WaveStandby();
         debugText += "ghosts.Count=" + ghosts.Count + "\ncurMoveTime=" + curMoveTime + "\nTime.timeScale" + Time.timeScale;
     }
@@ -91,11 +92,11 @@ public class ghostManager : MonoBehaviour
     //初期化
     void GhostInit()
     {
-        if (!nextWaveFlag) { return; }
-        if (curWaveStandbyTime > 0) { return; }
-        nextWaveFlag = false;
-        curWaveStandbyTime = waveStandbyTime;
-        spawnNextWaveText = false;
+        //if (!nextWaveFlag) { return; }
+        //if (curWaveStandbyTime > 0) { return; }
+        //nextWaveFlag = false;
+        // curWaveStandbyTime = waveStandbyTime;
+        //spawnNextWaveText = false;
         for (int i = 0; i < initNum; i++)
         {
             ghostScript ghost = Instantiate(ghostPrefab);
@@ -139,7 +140,7 @@ public class ghostManager : MonoBehaviour
                 curMoveTime = initMoveTime;
                 curStandbyTime = curmaxStandbyTime;
 
-               
+
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
@@ -240,12 +241,25 @@ public class ghostManager : MonoBehaviour
         if (!nextWaveFlag) { return; }
         if (!spawnNextWaveText)
         {
-            GameObject nextWaveText=Instantiate(nextWaveTextPrefab);
+            GameObject nextWaveText = Instantiate(nextWaveTextPrefab);
             nextWaveText.transform.GetChild(0).GetComponent<SetTextScript>().SetText(curWaveCount);
             curWaveCount++;
             spawnNextWaveText = true;
+            ghostInitFlag = false;
         }
         curWaveStandbyTime -= Time.deltaTime;
+        //カウントダウンが始まるタイミングでゴーストを出す
+        if (!ghostInitFlag && curWaveStandbyTime <= waveStandbyTime - 1.5f)
+        {
+            ghostInitFlag = true;
+            GhostInit();
+        }
+        if (curWaveStandbyTime < 0)
+        {
+            nextWaveFlag = false;
+            curWaveStandbyTime = waveStandbyTime;
+            spawnNextWaveText = false;
+        }
     }
 
 }
