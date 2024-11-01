@@ -37,6 +37,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] AnimationReset scoreTextResetAnime;
     [SerializeField] GameObject nextWaveTextPrefab;
     [SerializeField] GameObject goToHevenPrefab;
+    [SerializeField] ShakeScript cameraShakeScript;
 
 
 
@@ -208,12 +209,15 @@ public class ghostManager : MonoBehaviour
     //ê≥åÎÇÃââèo
     void EvaluationAnime(Ghost_Type type)
     {
+        //ê≥ÇµÇ¢Ç∆Ç´
         if (Discrimination(type))
         {
             Instantiate(goodText);
         }
         else
         {
+            //ä‘à·Ç¶ÇΩÇ∆Ç´
+            cameraShakeScript.ShakeStart();
             Instantiate(badText);
         }
     }

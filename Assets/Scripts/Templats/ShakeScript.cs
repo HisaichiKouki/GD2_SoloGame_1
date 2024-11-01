@@ -44,8 +44,16 @@ public class ShakeScript : MonoBehaviour
     }
     public void ShakeStart()
     {
-        isShake = true;
-        initPos = transformPos.position;
+        if (!isShake)
+        {
+            isShake = true;
+            initPos = transformPos.position;
+        }
+        else
+        {
+            SetShakeParamater();
+        }
+       
     }
 
     void IsShake()
