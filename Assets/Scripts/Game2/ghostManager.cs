@@ -19,6 +19,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] float parfectRatio;
     [SerializeField] float goodRatio;
     [SerializeField] float totalTimeScaleLerpTime;
+    [SerializeField] float bonusTimeRatio;
 
     float curMoveTime;
     float curmaxStandbyTime;
@@ -142,7 +143,7 @@ public class ghostManager : MonoBehaviour
 
         curmaxStandbyTime = maxStandbyTime;
         curStandbyTime = curmaxStandbyTime;
-        remainingTimeGauge.SetMaxValue(curmaxStandbyTime);
+        remainingTimeGauge.SetMaxValue(curStandbyTime);
     }
     //ゲーム内時間を加速する
     void AddTimeRatio()
@@ -160,10 +161,11 @@ public class ghostManager : MonoBehaviour
             if (ghosts.Count > 0)
             {
                 ghosts[0].SetAnimetion("GoHeaven");
+                curStandbyTime = curmaxStandbyTime;
                 EvaluationAnime(Ghost_Type.NORMAL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
-                curStandbyTime = curmaxStandbyTime;
+                remainingTimeGauge.SetMaxValue(curStandbyTime);
 
 
             }
@@ -173,10 +175,11 @@ public class ghostManager : MonoBehaviour
             if (ghosts.Count > 0)
             {
                 ghosts[0].SetAnimetion("GoHell");
+                curStandbyTime = curmaxStandbyTime;
                 EvaluationAnime(Ghost_Type.EVIL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
-                curStandbyTime = curmaxStandbyTime;
+                remainingTimeGauge.SetMaxValue(curStandbyTime);
             }
         }
     }
@@ -285,6 +288,8 @@ public class ghostManager : MonoBehaviour
             cameraShakeScript.ShakeStart();
             //charsShake.ShakeStart();
             Instantiate(badText);
+            curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
+            remainingTimeGauge.SetMaxValue(curStandbyTime);
         }
     }
 
@@ -298,7 +303,8 @@ public class ghostManager : MonoBehaviour
         if (curStandbyTime <= 0)
         {
             Damage();
-            curStandbyTime = curmaxStandbyTime;
+            curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
+            remainingTimeGauge.SetMaxValue(curStandbyTime);
         }
     }
     //ウェーブ開始時の処理

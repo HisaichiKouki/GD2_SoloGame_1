@@ -31,7 +31,7 @@ public class LerpNumber : MonoBehaviour
 
         }
 
-        curNum = (int)Easing.OutCubic(curEaseT, totalEaseT, (float)minNum, (float)maxNum);
+        curNum = (int)Easing.InOutCubic(curEaseT, totalEaseT, (float)minNum, (float)maxNum);
         setTextScript.SetText(curNum);
     }
     public void SetTargetNum(int value)

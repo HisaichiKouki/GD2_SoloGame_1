@@ -177,7 +177,8 @@ MonoBehaviour:
   waveStandbyTime: 3
   parfectRatio: 0.85
   goodRatio: 0.4
-  totalTimeScaleLerpTime: 0
+  totalTimeScaleLerpTime: 1
+  bonusTimeRatio: 2
   ghostSpownPoint: {fileID: 921512707}
   goodText: {fileID: 4339845691942960977, guid: d991d9cd5aa4a424292914e2c6cf664e, type: 3}
   niceText: {fileID: 4339845691942960977, guid: cc462345b63c5fd41bfbc3b7b4121839, type: 3}
