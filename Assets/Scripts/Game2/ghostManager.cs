@@ -84,6 +84,8 @@ public class ghostManager : MonoBehaviour
         curWaveStandbyTime = waveStandbyTime;
         curWaveCount = 0;
         nextWaveFlag = false;
+
+        curmaxStandbyTime = maxStandbyTime;
     }
 
     // Update is called once per frame
@@ -112,7 +114,7 @@ public class ghostManager : MonoBehaviour
         GaugeChange();
         //GhostInit();
         WaveStandby();
-        debugText += "ghosts.Count=" + ghosts.Count + "\ncurMoveTime=" + curMoveTime + "\nTime.timeScale" + Time.timeScale;
+        debugText += GetStandbyTimeRatio();
     }
 
     //‰Šú‰»
@@ -132,18 +134,18 @@ public class ghostManager : MonoBehaviour
         }
         initNum += addGhostNum;
         //—P—\ŠÔ‚Ì‰Šú‰»
-        RemainginTimeinit();
+        RemainginTimeinit(1);
 
         //ƒQ[ƒ€ŠÔ‚Ì‰Á‘¬
         AddTimeRatio();
     }
     //—P—\ŠÔ‚Ì‰Šú‰»
-    void RemainginTimeinit()
+    void RemainginTimeinit(float value)
     {
 
-        curmaxStandbyTime = maxStandbyTime;
+        curmaxStandbyTime = maxStandbyTime* value;
         curStandbyTime = curmaxStandbyTime;
-        remainingTimeGauge.SetMaxValue(curStandbyTime);
+        remainingTimeGauge.SetMaxValue(curmaxStandbyTime);
     }
     //ƒQ[ƒ€“àŠÔ‚ğ‰Á‘¬‚·‚é
     void AddTimeRatio()
@@ -161,7 +163,7 @@ public class ghostManager : MonoBehaviour
             if (ghosts.Count > 0)
             {
                 ghosts[0].SetAnimetion("GoHeaven");
-                curStandbyTime = curmaxStandbyTime;
+               // curStandbyTime = curmaxStandbyTime;
                 EvaluationAnime(Ghost_Type.NORMAL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
@@ -175,7 +177,7 @@ public class ghostManager : MonoBehaviour
             if (ghosts.Count > 0)
             {
                 ghosts[0].SetAnimetion("GoHell");
-                curStandbyTime = curmaxStandbyTime;
+                //curStandbyTime = curmaxStandbyTime;
                 EvaluationAnime(Ghost_Type.EVIL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
@@ -247,6 +249,7 @@ public class ghostManager : MonoBehaviour
             scoreText.SetText(score);
             scoreTextResetAnime.ResetAnime();
             curSuccesFlag = true;
+           
             //preSuccesFlagcurSuccesFlag==True‚Ì‚É
             //ƒRƒ“ƒ{‚ªŒp‘±‚·‚é‰‰o
             if (preSuccesFlag && curSuccesFlag)
@@ -260,12 +263,15 @@ public class ghostManager : MonoBehaviour
             }
             Debug.Log("CurConbo=" + curCombo);
 
-            if (GetStandbyTimeRatio() > parfectRatio)
+            //ƒQ[ƒW‚ÌŠ„‡‚É‚æ‚Á‚Ä•\¦‚·‚é•¶š‚ğ•Ï‚¦‚é
+
+            float standbyTimeRatio = GetStandbyTimeRatio();
+            if ( standbyTimeRatio > parfectRatio)
             {
                 Instantiate(parfectText);
                 Instantiate(evalutionCharas[0], evalutionCharaSpownPoitnt.transform);
             }
-            else if (GetStandbyTimeRatio() > goodRatio)
+            else if (standbyTimeRatio > goodRatio)
             {
                 Instantiate(goodText);
                 Instantiate(evalutionCharas[1], evalutionCharaSpownPoitnt.transform);
@@ -276,6 +282,8 @@ public class ghostManager : MonoBehaviour
                 Instantiate(evalutionCharas[2], evalutionCharaSpownPoitnt.transform);
             }
 
+            //—P—\ŠÔ‚Ì‰Šú‰»‚Í•]‰¿‚Ì•¶š‚ğo‚µ‚½Œã
+            RemainginTimeinit(1);
         }
         else
         {
@@ -288,8 +296,9 @@ public class ghostManager : MonoBehaviour
             cameraShakeScript.ShakeStart();
             //charsShake.ShakeStart();
             Instantiate(badText);
-            curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
-            remainingTimeGauge.SetMaxValue(curStandbyTime);
+            //curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
+            //remainingTimeGauge.SetMaxValue(curStandbyTime);
+            RemainginTimeinit(bonusTimeRatio);
         }
     }
 
@@ -303,8 +312,9 @@ public class ghostManager : MonoBehaviour
         if (curStandbyTime <= 0)
         {
             Damage();
-            curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
-            remainingTimeGauge.SetMaxValue(curStandbyTime);
+            //curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
+            //remainingTimeGauge.SetMaxValue(curStandbyTime);
+            RemainginTimeinit(bonusTimeRatio);
         }
     }
     //ƒEƒF[ƒuŠJn‚Ìˆ—
