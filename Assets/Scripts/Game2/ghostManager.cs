@@ -54,7 +54,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] LerpNumber maxComboText;
 
     //[SerializeField] ShakeScript charsShake;
-
+    AudioPlay audioPlay;
 
 
     List<ghostScript> ghosts = new List<ghostScript>();
@@ -66,6 +66,7 @@ public class ghostManager : MonoBehaviour
     bool curSuccesFlag;
     public string debugText;
     bool gameOverFlag;
+
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +87,7 @@ public class ghostManager : MonoBehaviour
         nextWaveFlag = false;
 
         curmaxStandbyTime = maxStandbyTime;
+        audioPlay = GetComponent<AudioPlay>();
     }
 
     // Update is called once per frame
@@ -143,7 +145,7 @@ public class ghostManager : MonoBehaviour
     void RemainginTimeinit(float value)
     {
 
-        curmaxStandbyTime = maxStandbyTime* value;
+        curmaxStandbyTime = maxStandbyTime * value;
         curStandbyTime = curmaxStandbyTime;
         remainingTimeGauge.SetMaxValue(curmaxStandbyTime);
     }
@@ -163,12 +165,12 @@ public class ghostManager : MonoBehaviour
             if (ghosts.Count > 0)
             {
                 ghosts[0].SetAnimetion("GoHeaven");
-               // curStandbyTime = curmaxStandbyTime;
+                // curStandbyTime = curmaxStandbyTime;
                 EvaluationAnime(Ghost_Type.NORMAL);
                 DestroyObj();
                 curMoveTime = initMoveTime;
                 remainingTimeGauge.SetMaxValue(curStandbyTime);
-
+                audioPlay.SE1();
 
             }
         }
@@ -182,6 +184,7 @@ public class ghostManager : MonoBehaviour
                 DestroyObj();
                 curMoveTime = initMoveTime;
                 remainingTimeGauge.SetMaxValue(curStandbyTime);
+                audioPlay.SE1();
             }
         }
     }
@@ -249,7 +252,7 @@ public class ghostManager : MonoBehaviour
             scoreText.SetText(score);
             scoreTextResetAnime.ResetAnime();
             curSuccesFlag = true;
-           
+
             //preSuccesFlagcurSuccesFlag==Trueの時に
             //コンボが継続する演出
             if (preSuccesFlag && curSuccesFlag)
@@ -266,7 +269,7 @@ public class ghostManager : MonoBehaviour
             //ゲージの割合によって表示する文字を変える
 
             float standbyTimeRatio = GetStandbyTimeRatio();
-            if ( standbyTimeRatio > parfectRatio)
+            if (standbyTimeRatio > parfectRatio)
             {
                 Instantiate(parfectText);
                 Instantiate(evalutionCharas[0], evalutionCharaSpownPoitnt.transform);
