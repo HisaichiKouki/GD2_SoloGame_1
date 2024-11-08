@@ -318,6 +318,7 @@ public class ghostManager : MonoBehaviour
             //curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
             //remainingTimeGauge.SetMaxValue(curStandbyTime);
             RemainginTimeinit(bonusTimeRatio);
+            missPlaying = true;
         }
     }
     //ウェーブ開始時の処理
