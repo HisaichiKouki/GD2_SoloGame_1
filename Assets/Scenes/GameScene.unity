@@ -177,13 +177,14 @@ MonoBehaviour:
   waveStandbyTime: 3
   parfectRatio: 0.85
   goodRatio: 0.4
+  totalTimeScaleLerpTime: 0
   ghostSpownPoint: {fileID: 921512707}
   goodText: {fileID: 4339845691942960977, guid: d991d9cd5aa4a424292914e2c6cf664e, type: 3}
   niceText: {fileID: 4339845691942960977, guid: cc462345b63c5fd41bfbc3b7b4121839, type: 3}
   parfectText: {fileID: 4339845691942960977, guid: d5b63a414cb3fb34488fd007c3d2c2bb, type: 3}
   badText: {fileID: 4339845691942960977, guid: d3093e20554753341b57a4e0f37d33df, type: 3}
   damageText: {fileID: 4339845691942960977, guid: 11076e7efefbee44babd29c7ec5fa057, type: 3}
-  gameOverText: {fileID: 4339845691942960977, guid: 2dffc9816542ea8499d9d0292e358781, type: 3}
+  gameOverText: {fileID: 368917886}
   ghostPrefab: {fileID: 254007660751611121, guid: b41289757c004444e92af5ea6c79f748, type: 3}
   remainingTimeGauge: {fileID: 1814671947}
   hitPointGauge: {fileID: 535304099}
@@ -197,6 +198,8 @@ MonoBehaviour:
   - {fileID: 2062294842782186464, guid: 7b79e4eb8a09d894c981c64c2d09968a, type: 3}
   - {fileID: 6278685516379867359, guid: 3c2b352a8e41fa543ab014b2693050eb, type: 3}
   - {fileID: 2507428216079498447, guid: 2f3e790b7c1f794478e60b2743ead312, type: 3}
+  totalNumText: {fileID: 1426777982}
+  maxComboText: {fileID: 476257128}
   debugText: 
 --- !u!1 &139457234
 GameObject:
@@ -925,7 +928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &368917887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,7 +1169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minNum: 0
   maxNum: 1000
-  totalEaseT: 4
+  totalEaseT: 2
 --- !u!114 &476257129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2680,7 +2683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minNum: 0
   maxNum: 1000
-  totalEaseT: 4
+  totalEaseT: 2.5
 --- !u!95 &1426777983
 Animator:
   serializedVersion: 5

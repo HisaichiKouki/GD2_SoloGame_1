@@ -38,13 +38,13 @@ public class LerpNumber : MonoBehaviour
     {
         maxNum = value;
     }
-    public void StartEase(int min,int max)
+    public void SetStartEase(int min,int max)
     {
         minNum = min;
         maxNum = max;
-        easeStart = false;
+        easeStart = true;
     }
-    public void ResetEase()
+    public void SetResetEase()
     {
         curEaseT = 0;
         curNum = minNum;

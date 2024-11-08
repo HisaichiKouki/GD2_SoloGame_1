@@ -18,16 +18,19 @@ public class ghostManager : MonoBehaviour
     [SerializeField] float waveStandbyTime;
     [SerializeField] float parfectRatio;
     [SerializeField] float goodRatio;
-
+    [SerializeField] float totalTimeScaleLerpTime;
 
     float curMoveTime;
     float curmaxStandbyTime;
     float curStandbyTime;
     float curWaveStandbyTime;
+    float curTimeScaleLerpTime;
+    float preTimeScale;
     int curHitPoint;
     int score;
     int curWaveCount;
-    int curConbo;
+    int curCombo;
+    int maxCombo;
     [Header("プレハブ")]
     [SerializeField] GameObject ghostSpownPoint;
     [SerializeField] GameObject goodText;
@@ -46,6 +49,9 @@ public class ghostManager : MonoBehaviour
     [SerializeField] ShakeScript cameraShakeScript;
     [SerializeField] GameObject evalutionCharaSpownPoitnt;
     [SerializeField] GameObject[] evalutionCharas;
+    [SerializeField] LerpNumber totalNumText;
+    [SerializeField] LerpNumber maxComboText;
+
     //[SerializeField] ShakeScript charsShake;
 
 
@@ -58,6 +64,8 @@ public class ghostManager : MonoBehaviour
     bool preSuccesFlag;
     bool curSuccesFlag;
     public string debugText;
+    bool gameOverFlag;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -86,7 +94,12 @@ public class ghostManager : MonoBehaviour
             SceneManager.LoadScene("GameScene");
         }
 
-        if (curHitPoint <= 0) { return; }
+        if (curHitPoint <= 0)
+        {
+            //GameOver時のTimeScaleの減衰
+            AttenuationTimeScale();
+            return;
+        }
         debugText = "";
         //ゴーストがいなくなって移動カウントも終わった時に次のフェーズへ行く
         if (curMoveTime <= 0 && ghosts.Count <= 0)
@@ -189,9 +202,13 @@ public class ghostManager : MonoBehaviour
         Instantiate(damageText);
         if (curHitPoint <= 0)
         {
-            Instantiate(gameOverText);
+            // Instantiate(gameOverText);
+            gameOverFlag = true;
+            preTimeScale = Time.timeScale;
         }
     }
+
+
     //判定が終わったらリストから削除する
     void DestroyObj()
     {
@@ -219,7 +236,7 @@ public class ghostManager : MonoBehaviour
     void EvaluationAnime(Ghost_Type type)
     {
         preSuccesFlag = curSuccesFlag;
-        
+
         //正しいとき
         if (Discrimination(type))
         { //Debug.Log("True");
@@ -231,9 +248,14 @@ public class ghostManager : MonoBehaviour
             //コンボが継続する演出
             if (preSuccesFlag && curSuccesFlag)
             {
-                curConbo++;
+                curCombo++;
             }
-            Debug.Log("CurConbo=" + curConbo);
+            //maxComboの更新
+            if (curCombo > maxCombo)
+            {
+                maxCombo = curCombo;
+            }
+            Debug.Log("CurConbo=" + curCombo);
 
             if (GetStandbyTimeRatio() > parfectRatio)
             {
@@ -250,7 +272,7 @@ public class ghostManager : MonoBehaviour
                 Instantiate(niceText);
                 Instantiate(evalutionCharas[2], evalutionCharaSpownPoitnt.transform);
             }
-            
+
         }
         else
         {
@@ -259,7 +281,7 @@ public class ghostManager : MonoBehaviour
             Damage();
             curSuccesFlag = false;
             missPlaying = true;
-            curConbo = 0;
+            curCombo = 0;
             cameraShakeScript.ShakeStart();
             //charsShake.ShakeStart();
             Instantiate(badText);
@@ -304,6 +326,25 @@ public class ghostManager : MonoBehaviour
             curWaveStandbyTime = waveStandbyTime;
             spawnNextWaveText = false;
         }
+    }
+
+    //GameOver時のTimeScaleの減衰
+    void AttenuationTimeScale()
+    {
+        if (!gameOverFlag) { return; }
+        curTimeScaleLerpTime += Time.deltaTime;
+        Time.timeScale = Easing.InOutSine(curTimeScaleLerpTime, totalTimeScaleLerpTime, preTimeScale, 1);
+
+        if (curTimeScaleLerpTime > totalTimeScaleLerpTime)
+        {
+            if (!gameOverText.activeSelf)
+            {
+                gameOverText.SetActive(true);
+                totalNumText.SetTargetNum(score);
+                maxComboText.SetTargetNum(maxCombo);
+            }
+        }
+
     }
     float GetStandbyTimeRatio() { return (curStandbyTime / curmaxStandbyTime); }
     public bool GetMissPlaying() { return missPlaying; }
