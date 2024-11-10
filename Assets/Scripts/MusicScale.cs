@@ -5,6 +5,7 @@ using UnityEngine;
 public class MusicScale : MonoBehaviour
 {
     [SerializeField] Transform target;
+    [SerializeField] bool onlyY;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +15,17 @@ public class MusicScale : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.localScale = target.localScale;
+        if (onlyY)
+        {
+            Vector2 scale=this.transform.localScale;
+            scale.y=target.localScale.y;
+            this.transform.localScale=scale;
+
+        }
+        else
+        {
+            this.transform.localScale = target.localScale;
+
+        }
     }
 }

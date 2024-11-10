@@ -275,7 +275,7 @@ public class ghostManager : MonoBehaviour
             {
                 maxCombo = curCombo;
             }
-            Debug.Log("CurConbo=" + curCombo);
+            //Debug.Log("CurConbo=" + curCombo);
 
             //ƒQ[ƒW‚ÌŠ„‡‚É‚æ‚Á‚Ä•\¦‚·‚é•¶š‚ğ•Ï‚¦‚é
 
@@ -382,4 +382,6 @@ public class ghostManager : MonoBehaviour
     float GetStandbyTimeRatio() { return (curStandbyTime / curmaxStandbyTime); }
     public bool GetMissPlaying() { return missPlaying; }
     public int GetCurHitPoint() { return curHitPoint; }
+
+    public int GetCurCombo() {  return curCombo; }
 }
