@@ -38,7 +38,7 @@ public class DecorationManager : MonoBehaviour
         }
         else if (ghostManagerSc.GetCurCombo() >= 10-1)
         {
-            Debug.Log(ghostManagerSc.GetCurCombo());
+
             SetActive(0,true);
         }
 

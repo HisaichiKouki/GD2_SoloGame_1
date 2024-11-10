@@ -40,6 +40,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] GameObject badText;
     [SerializeField] GameObject damageText;
     [SerializeField] GameObject gameOverText;
+    [SerializeField] GameObject gameMainCanvas;
     [SerializeField] ghostScript ghostPrefab;
     [SerializeField] GaugeScript remainingTimeGauge;
    // [SerializeField] GaugeScript hitPointGauge;
@@ -68,7 +69,7 @@ public class ghostManager : MonoBehaviour
     bool curSuccesFlag;
     public string debugText;
     bool gameOverFlag;
-
+    bool gameStart;
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +91,7 @@ public class ghostManager : MonoBehaviour
 
         curmaxStandbyTime = maxStandbyTime;
         audioPlay = GetComponent<AudioPlay>();
+        gameMainCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -105,9 +107,22 @@ public class ghostManager : MonoBehaviour
         {
             //GameOver時のTimeScaleの減衰
             AttenuationTimeScale();
+
+            if (Input.GetKeyDown(KeyCode.Space)) 
+            {
+                SceneManager.LoadScene("GameScene");
+            }
             return;
         }
         debugText = "";
+
+        if (!gameStart) {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                gameStart = true;
+                gameMainCanvas.SetActive(true);
+            }
+            return;}
         //ゴーストがいなくなって移動カウントも終わった時に次のフェーズへ行く
         if (curMoveTime <= 0 && ghosts.Count <= 0)
         {
@@ -373,6 +388,7 @@ public class ghostManager : MonoBehaviour
             if (!gameOverText.activeSelf)
             {
                 gameOverText.SetActive(true);
+                gameMainCanvas.SetActive(false);
                 totalNumText.SetTargetNum(score);
                 maxComboText.SetTargetNum(maxCombo);
             }
