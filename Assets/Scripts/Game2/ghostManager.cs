@@ -52,6 +52,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] GameObject[] evalutionCharas;
     [SerializeField] LerpNumber totalNumText;
     [SerializeField] LerpNumber maxComboText;
+    [SerializeField] Animator handAnime;
 
     //[SerializeField] ShakeScript charsShake;
     AudioPlay audioPlay;
@@ -172,6 +173,7 @@ public class ghostManager : MonoBehaviour
                 remainingTimeGauge.SetMaxValue(curStandbyTime);
                 audioPlay.SE1();
 
+                handAnime.SetInteger("State", 1);
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
@@ -185,6 +187,7 @@ public class ghostManager : MonoBehaviour
                 curMoveTime = initMoveTime;
                 remainingTimeGauge.SetMaxValue(curStandbyTime);
                 audioPlay.SE1();
+                handAnime.SetInteger("State", 2);
             }
         }
     }
@@ -227,7 +230,12 @@ public class ghostManager : MonoBehaviour
     //列を前に詰める処理
     void ProgressMove()
     {
-        if (curMoveTime <= 0) { return; }
+        if (curMoveTime <= 0)
+        {
+            //手を待機状態に
+            handAnime.SetInteger("State", 0);
+            return;
+        }
         curMoveTime -= Time.deltaTime;
         float easeT = curMoveTime / initMoveTime;
         //列を前に詰める
@@ -319,6 +327,7 @@ public class ghostManager : MonoBehaviour
             //remainingTimeGauge.SetMaxValue(curStandbyTime);
             RemainginTimeinit(bonusTimeRatio);
             missPlaying = true;
+            handAnime.SetInteger("State", 0);
         }
     }
     //ウェーブ開始時の処理
@@ -345,6 +354,7 @@ public class ghostManager : MonoBehaviour
             nextWaveFlag = false;
             curWaveStandbyTime = waveStandbyTime;
             spawnNextWaveText = false;
+            handAnime.SetInteger("State", 0);
         }
     }
 
