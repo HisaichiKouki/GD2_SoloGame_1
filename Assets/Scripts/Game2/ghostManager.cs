@@ -369,8 +369,8 @@ public class ghostManager : MonoBehaviour
         if (!spawnNextWaveText)
         {
             GameObject nextWaveText = Instantiate(nextWaveTextPrefab);
-            nextWaveText.transform.GetChild(0).GetComponent<SetTextScript>().SetText(curWaveCount);
             curWaveCount++;
+            nextWaveText.transform.GetChild(0).GetComponent<SetTextScript>().SetText(curWaveCount);
             spawnNextWaveText = true;
             ghostInitFlag = false;
         }
