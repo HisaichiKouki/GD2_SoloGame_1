@@ -24,7 +24,7 @@ public class RandomVel : MonoBehaviour
     {
         rigidbody2D.AddForce(new Vector2(Random.Range(-value, value), Random.Range(-value, value)), ForceMode2D.Impulse);
 
-        Debug.Log("rigidbody2D.velocity" + rigidbody2D.velocity);
+       // Debug.Log("rigidbody2D.velocity" + rigidbody2D.velocity);
     }
     // Update is called once per frame
     void Update()

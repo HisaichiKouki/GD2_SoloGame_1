@@ -160,7 +160,7 @@ public class ghostManager : MonoBehaviour
     void Sorting()
     {
         if (nextWaveFlag) { return; }
-        if (curMoveTime > 0) { return; }
+        if (curMoveTime > 0) { return; }//ˆÚ“®ˆ—‚ð‚µ‚Ä‚¢‚½‚çreturn
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             if (ghosts.Count > 0)
@@ -232,7 +232,7 @@ public class ghostManager : MonoBehaviour
     {
         if (curMoveTime <= 0)
         {
-            //Žè‚ð‘Ò‹@ó‘Ô‚É
+            //ˆÚ“®ˆ—‚ªI‚í‚Á‚½‚çŽè‚ð‘Ò‹@ó‘Ô‚É
             handAnime.SetInteger("State", 0);
             return;
         }
