@@ -42,7 +42,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] GameObject gameOverText;
     [SerializeField] ghostScript ghostPrefab;
     [SerializeField] GaugeScript remainingTimeGauge;
-    [SerializeField] GaugeScript hitPointGauge;
+   // [SerializeField] GaugeScript hitPointGauge;
     [SerializeField] SetTextScript scoreText;
     [SerializeField] AnimationReset scoreTextResetAnime;
     [SerializeField] GameObject nextWaveTextPrefab;
@@ -53,6 +53,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] LerpNumber totalNumText;
     [SerializeField] LerpNumber maxComboText;
     [SerializeField] Animator handAnime;
+    [SerializeField] HitPointManager hitPoints;
 
     //[SerializeField] ShakeScript charsShake;
     AudioPlay audioPlay;
@@ -78,8 +79,8 @@ public class ghostManager : MonoBehaviour
         Time.timeScale = 1;
 
         curHitPoint = maxHitPoint;
-        hitPointGauge.SetMaxValue(maxHitPoint);
-        hitPointGauge.SetCurrentValue(curHitPoint);
+        //hitPointGauge.SetMaxValue(maxHitPoint);
+       // hitPointGauge.SetCurrentValue(curHitPoint);
         score = 0;
         scoreText.SetText(score);
 
@@ -209,7 +210,9 @@ public class ghostManager : MonoBehaviour
     void Damage()
     {
         curHitPoint--;
-        hitPointGauge.SetCurrentValue(curHitPoint);
+        hitPoints.Damage();
+        cameraShakeScript.ShakeStart();
+        //hitPointGauge.SetCurrentValue(curHitPoint);
         Instantiate(damageText);
         if (curHitPoint <= 0)
         {
@@ -304,7 +307,7 @@ public class ghostManager : MonoBehaviour
             curSuccesFlag = false;
             missPlaying = true;
             curCombo = 0;
-            cameraShakeScript.ShakeStart();
+            
             //charsShake.ShakeStart();
             Instantiate(badText);
             //curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
@@ -378,4 +381,5 @@ public class ghostManager : MonoBehaviour
     }
     float GetStandbyTimeRatio() { return (curStandbyTime / curmaxStandbyTime); }
     public bool GetMissPlaying() { return missPlaying; }
+    public int GetCurHitPoint() { return curHitPoint; }
 }
