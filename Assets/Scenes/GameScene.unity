@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 23096253}
   - component: {fileID: 23096252}
   - component: {fileID: 23096251}
+  - component: {fileID: 23096254}
   m_Layer: 0
   m_Name: GhostManager
   m_TagString: Untagged
@@ -345,6 +346,27 @@ MonoBehaviour:
   b7: {fileID: 0}
   b8: {fileID: 0}
   b9: {fileID: 0}
+--- !u!95 &23096254
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23096247}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 459d4e6f577ced44fbe7f7b065806069, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &139457234
 GameObject:
   m_ObjectHideFlags: 0
