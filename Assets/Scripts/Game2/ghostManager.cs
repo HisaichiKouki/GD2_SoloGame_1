@@ -41,9 +41,10 @@ public class ghostManager : MonoBehaviour
     [SerializeField] GameObject damageText;
     [SerializeField] GameObject gameOverText;
     [SerializeField] GameObject gameMainCanvas;
+    [SerializeField] GameObject titleObj;
     [SerializeField] ghostScript ghostPrefab;
     [SerializeField] GaugeScript remainingTimeGauge;
-   // [SerializeField] GaugeScript hitPointGauge;
+    // [SerializeField] GaugeScript hitPointGauge;
     [SerializeField] SetTextScript scoreText;
     [SerializeField] AnimationReset scoreTextResetAnime;
     [SerializeField] GameObject nextWaveTextPrefab;
@@ -55,6 +56,7 @@ public class ghostManager : MonoBehaviour
     [SerializeField] LerpNumber maxComboText;
     [SerializeField] Animator handAnime;
     [SerializeField] HitPointManager hitPoints;
+    [SerializeField] GameObject gameStartText;
 
     //[SerializeField] ShakeScript charsShake;
     AudioPlay audioPlay;
@@ -70,6 +72,9 @@ public class ghostManager : MonoBehaviour
     public string debugText;
     bool gameOverFlag;
     bool gameStart;
+    bool gameStartCountDown;
+
+    float gameStartTime;
 
     // Start is called before the first frame update
     void Start()
@@ -81,7 +86,7 @@ public class ghostManager : MonoBehaviour
 
         curHitPoint = maxHitPoint;
         //hitPointGauge.SetMaxValue(maxHitPoint);
-       // hitPointGauge.SetCurrentValue(curHitPoint);
+        // hitPointGauge.SetCurrentValue(curHitPoint);
         score = 0;
         scoreText.SetText(score);
 
@@ -108,7 +113,7 @@ public class ghostManager : MonoBehaviour
             //GameOver時のTimeScaleの減衰
             AttenuationTimeScale();
 
-            if (Input.GetKeyDown(KeyCode.Space)) 
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene("GameScene");
             }
@@ -116,13 +121,21 @@ public class ghostManager : MonoBehaviour
         }
         debugText = "";
 
-        if (!gameStart) {
+        if (!gameStart)
+        {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                gameStart = true;
+                Instantiate(gameStartText);
+                //gameStart = true;
+                gameStartCountDown = true;
                 gameMainCanvas.SetActive(true);
+                titleObj.SetActive(false);
+                //猶予時間の初期化
+                RemainginTimeinit(1);
             }
-            return;}
+            GameStartCount();
+            return;
+        }
         //ゴーストがいなくなって移動カウントも終わった時に次のフェーズへ行く
         if (curMoveTime <= 0 && ghosts.Count <= 0)
         {
@@ -165,6 +178,7 @@ public class ghostManager : MonoBehaviour
         curmaxStandbyTime = maxStandbyTime * value;
         curStandbyTime = curmaxStandbyTime;
         remainingTimeGauge.SetMaxValue(curmaxStandbyTime);
+        remainingTimeGauge.SetCurrentValue(curStandbyTime);
     }
     //ゲーム内時間を加速する
     void AddTimeRatio()
@@ -322,7 +336,7 @@ public class ghostManager : MonoBehaviour
             curSuccesFlag = false;
             missPlaying = true;
             curCombo = 0;
-            
+
             //charsShake.ShakeStart();
             Instantiate(badText);
             //curStandbyTime = curmaxStandbyTime * bonusTimeRatio;
@@ -375,6 +389,18 @@ public class ghostManager : MonoBehaviour
             handAnime.SetInteger("State", 0);
         }
     }
+    //ゲーム開始時の処理
+    void GameStartCount()
+    {
+        if (!gameStartCountDown) { return; }
+
+        gameStartTime += Time.deltaTime;
+        if (gameStartTime >= 3)
+        {
+            gameStart = true;
+          
+        }
+    }
 
     //GameOver時のTimeScaleの減衰
     void AttenuationTimeScale()
@@ -399,5 +425,5 @@ public class ghostManager : MonoBehaviour
     public bool GetMissPlaying() { return missPlaying; }
     public int GetCurHitPoint() { return curHitPoint; }
 
-    public int GetCurCombo() {  return curCombo; }
+    public int GetCurCombo() { return curCombo; }
 }
