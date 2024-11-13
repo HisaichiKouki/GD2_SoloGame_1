@@ -66,7 +66,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e899b688a136719408a4f7ec0cdb5730, type: 3}
+    m_Font: {fileID: 12800000, guid: 8dcd8854c4c9d3b4996a3406ad5e3956, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e899b688a136719408a4f7ec0cdb5730, type: 3}
+    m_Font: {fileID: 12800000, guid: 8dcd8854c4c9d3b4996a3406ad5e3956, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -475,7 +475,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e899b688a136719408a4f7ec0cdb5730, type: 3}
+    m_Font: {fileID: 12800000, guid: 8dcd8854c4c9d3b4996a3406ad5e3956, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -524,7 +524,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 35, y: 0}
   m_SizeDelta: {x: 1600, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5268973720297178634
@@ -556,8 +556,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e899b688a136719408a4f7ec0cdb5730, type: 3}
-    m_FontSize: 170
+    m_Font: {fileID: 12800000, guid: 8dcd8854c4c9d3b4996a3406ad5e3956, type: 3}
+    m_FontSize: 138
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -568,7 +568,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Wave1Clear
+  m_Text: "\u96E3\u5EA6 1 \u30AF\u30EA\u30A2"
 --- !u!114 &1276883068726810415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,8 +581,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e33980298e78e40929470787c69bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontString: Wave
-  backString: Clear
+  frontString: "\u4F55\u5EA6 "
+  backString: " \u30AF\u30EA\u30A2\u30C3!"
 --- !u!114 &3562975647663806226
 MonoBehaviour:
   m_ObjectHideFlags: 0
