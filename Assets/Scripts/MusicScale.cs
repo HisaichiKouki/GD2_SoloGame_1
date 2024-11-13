@@ -17,7 +17,7 @@ public class MusicScale : MonoBehaviour
     {
         if (onlyY)
         {
-            Vector2 scale=this.transform.localScale;
+            Vector3 scale=this.transform.localScale;
             scale.y=target.localScale.y;
             this.transform.localScale=scale;
 
