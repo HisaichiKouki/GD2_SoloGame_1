@@ -581,7 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e33980298e78e40929470787c69bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontString: "\u4F55\u5EA6 "
+  frontString: "\u96E3\u5EA6 "
   backString: " \u30AF\u30EA\u30A2\u30C3!"
 --- !u!114 &3562975647663806226
 MonoBehaviour:
