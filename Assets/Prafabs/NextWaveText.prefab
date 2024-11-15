@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frontString: "\u96E3\u5EA6 "
-  backString: " \u30AF\u30EA\u30A2\u30C3!"
+  backString: " \u7A81\u7834\u30C3!"
 --- !u!114 &3562975647663806226
 MonoBehaviour:
   m_ObjectHideFlags: 0
